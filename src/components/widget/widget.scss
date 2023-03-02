@@ -7,6 +7,7 @@
     box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
     border-radius: 10px;
     height: 150px;
+    background-color: white; 
 
     .left{
         display: flex;
@@ -18,13 +19,14 @@
         .title{
             font-weight: bold;
             font-size: 14px;
-            color: rgb(160, 144, 144);
+            color: #6439ff;
     
         }
         
         .counter{
-            font-size: 38px;
+            font-size: 28px;
             font-weight: 300;
+            margin-left: 10px;
         }
     }
 }
