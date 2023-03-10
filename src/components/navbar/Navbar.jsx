@@ -10,11 +10,11 @@ import { Button } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useHistory } from 'react-router-dom';
 const Navbar = () => {
-  const history=useHistory()
-  const handleLogout=()=>{
-    localStorage.removeItem('access-token')
-    history.push("/",{push:true})
-}
+//   const history=useHistory()
+//   const handleLogout=()=>{
+//     localStorage.removeItem('access-token')
+//     history.push("/",{push:true})
+// }
   return (
     <div className='navbar'>
      <div className="wrapper">
@@ -23,7 +23,7 @@ const Navbar = () => {
    </div>
       <div className="items">
         <div className="item">
-        <Button onClick={handleLogout}>
+        <Button>
         <ExitToAppIcon className="icon"/>
         <span >Logout</span>
         </Button>

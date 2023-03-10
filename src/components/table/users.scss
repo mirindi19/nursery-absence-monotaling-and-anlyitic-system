@@ -1,0 +1,11 @@
+.users{
+    display: flex;
+
+    .nav{
+        flex: 6;
+
+        .usercontainer{
+            padding: 20px;
+        }
+    }
+}

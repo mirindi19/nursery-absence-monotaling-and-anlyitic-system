@@ -1,16 +1,19 @@
 import HomePage from "./pages/home/HomePage";
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from "react-router-dom";
+import Users from "./components/table/Users";
+import Teacher from "./components/table/Teacher";
+import Login from "./pages/login/Login";
+import {BrowserRouter,Route,Routes} from "react-router-dom";
 
-import Routes from './routers/index';
 function App() {
   return (
-    <div className="App">
-     <HomePage/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<HomePage/>}/>
+        <Route path='/user-list' element={<Users/>}/>
+        <Route path='/teacher-list' element={<Teacher/>}/>
+        <Route path='/login-form' element={<Login/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
