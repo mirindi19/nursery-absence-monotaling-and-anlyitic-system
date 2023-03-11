@@ -13,13 +13,13 @@ import Paper from '@mui/material/Paper';
 const Users = () => {
   function createData(
     email: string,
-    Password: String,
+    password: String,
     isActive: String,
-    teacher: String,
-    Parent: String,
-    ResetLink:String,
+    teacherId: String,
+    parentId: String,
+    resetLink:String,
   ) {
-    return { email, Password, isActive, teacher, Parent,ResetLink};
+    return { email, password, isActive, teacherId, parentId,resetLink};
   }
   
   const rows = [
@@ -56,11 +56,11 @@ const Users = () => {
              <TableCell component="th" scope="row">
                {row.email}
              </TableCell>
-             <TableCell align="right">{row.Password}</TableCell>
+             <TableCell align="right">{row.password}</TableCell>
              <TableCell align="right">{row.isActive}</TableCell>
-             <TableCell align="right">{row.teacher}</TableCell>
-             <TableCell align="right">{row.Parent}</TableCell>
-             <TableCell align="right">{row.ResetLink}</TableCell>
+             <TableCell align="right">{row.teacherId}</TableCell>
+             <TableCell align="right">{row.parentId}</TableCell>
+             <TableCell align="right">{row.resetLink}</TableCell>
            </TableRow>
          ))}
        </TableBody>

@@ -1,0 +1,11 @@
+.course{
+    display: flex;
+
+    .coursenav{
+        flex: 6;
+
+        .tableform{
+            padding: 20px;
+        }
+    }
+}

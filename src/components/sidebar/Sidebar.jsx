@@ -38,10 +38,12 @@ const Sidebar = () => {
                     <span>teacher</span>
                 </li>
                 </Link>
+                <Link to="/class" style={{textDecoration:"none"}}>
                 <li>
                 <ProductionQuantityLimitsTwoToneIcon className="icon" />
-                    <span>course</span>
+                    <span>Class</span>
                 </li>
+                </Link>
                 <li>
                     <BungalowIcon className="icon"/>
                     <span>Student</span>
