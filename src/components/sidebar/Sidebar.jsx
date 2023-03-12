@@ -56,6 +56,20 @@ const Sidebar = () => {
                     <span>Message</span>
                 </li>  
                 </Link>
+                <Link to="/parent" style={{textDecoration:"none"}}>
+                <li>
+                <BungalowIcon className="icon"/>
+                <span>Parents</span>
+            </li> 
+            </Link>
+            <li>
+            <BungalowIcon className="icon"/>
+            <span>Attandance</span>
+        </li> 
+        <li>
+        <BungalowIcon className="icon"/>
+        <span>Subject</span>
+    </li> 
             </ul>
         </div>
     </div>

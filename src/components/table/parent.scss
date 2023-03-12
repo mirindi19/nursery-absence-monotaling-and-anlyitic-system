@@ -1,12 +1,9 @@
-.message{
+.parent{
     display: flex;
-
-    .navMessage{
+    .navParent{
         flex: 6;
-
-        .messageTable{
+        .parentTable{
             padding: 20px;
         }
-
     }
 }

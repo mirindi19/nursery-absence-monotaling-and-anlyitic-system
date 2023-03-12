@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Class from "./components/table/Class";
 import Children from "./components/table/Children";
 import Message from "./components/table/Message";
+import Parent from "./components/table/Parent";
 import {BrowserRouter,Route,Routes} from "react-router-dom";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/class' element={<Class/>}/>
         <Route path='/children' element={<Children/>}/>
         <Route path='/message' element={<Message/>}/>
+        <Route path='/parent' element={<Parent/>}/>
       </Routes>
     </BrowserRouter>
   );
