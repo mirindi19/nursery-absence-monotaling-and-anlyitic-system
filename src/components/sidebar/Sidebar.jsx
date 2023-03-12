@@ -8,13 +8,13 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import BungalowIcon from '@mui/icons-material/Bungalow';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-
+import IMAGES from "../../Assets/images";
 const Sidebar = () => {
 
   return (
     <div className='sidebar'>
         <div className="top">
-            <span className='logo'>NAMAAS</span>
+        <img src={IMAGES.logo} alt="" className='avantare'/>
         </div>
         <div className="center">
             <ul>
@@ -44,14 +44,18 @@ const Sidebar = () => {
                     <span>Class</span>
                 </li>
                 </Link>
+                <Link to="/children" style={{textDecoration:"none"}}>
                 <li>
                     <BungalowIcon className="icon"/>
-                    <span>Student</span>
-                </li>   
+                    <span>chidren</span>
+                </li>  
+                </Link> 
+                <Link to="/message" style={{textDecoration:"none"}}>
                 <li>
                     <BungalowIcon className="icon"/>
                     <span>Message</span>
                 </li>  
+                </Link>
             </ul>
         </div>
     </div>

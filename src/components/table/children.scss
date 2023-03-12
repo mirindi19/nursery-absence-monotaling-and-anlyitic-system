@@ -1,0 +1,11 @@
+.children{
+    display: flex;
+
+    .navchildren{
+        flex: 6;
+
+        .childrenTable{
+            padding: 20px;
+        }
+    }
+}

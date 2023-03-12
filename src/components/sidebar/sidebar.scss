@@ -10,6 +10,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        .avantare{
+            width: 50%;
+            border-radius: 100%;
+            margin-top: 70px;
+        }
         
         .logo{
             font-size: 20px;
@@ -31,8 +36,8 @@
             .title{
                 font-size: 10px;
                 font-weight: bold;
-                color:#999;
-                margin-top: 20px;
+                color:white;
+                margin-top: 70px;
                 margin-bottom: 5px;
                 line-height: 30px;
                 
@@ -46,8 +51,7 @@
                 cursor: pointer;
 
                 &:hover{
-                    background-color: white;
-                    color:#00264D;
+                    background-color: rgb(11, 2, 62);
                 }
 
                 .icon{
@@ -62,7 +66,7 @@
                     margin-left: 10px;
                     margin-top: 10px;
                 }
-                span:h
+
             }
         }
     }
