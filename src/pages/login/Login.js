@@ -1,4 +1,5 @@
 import React from 'react'
+import "./login.scss"
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
@@ -10,8 +11,8 @@ import useResponsive from "../../hooks/useResponsive"
 // import Iconify from '../components/iconify';
 // // sections
 // import { LoginForm } from '../sections/auth/login';
-
-
+import LoginForm from '../../components/form/LoginForm';
+import IMAGES from "../../Assets/images";
 const StyledRoot = styled('div')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
       display: 'flex',
@@ -43,37 +44,29 @@ const Login = () => {
   return (
     <div>
     <Helmet>
-    <title> Login | Minimal UI </title>
+    <title> Login</title>
   </Helmet>
   <StyledRoot>
-
   {mdUp && (
-    <StyledSection>
+    <StyledSection className='sectionform'>
+    <img src={IMAGES.logo} alt="" className='avantare'/>
       <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
         Hi, Welcome Back
       </Typography>
-
+      <img src="/assets/illustrations/illustration_login.png" alt="login" />
     </StyledSection>
   )}
 
   <Container maxWidth="sm">
     <StyledContent>
       <Typography variant="h4" gutterBottom>
-        Sign in to Minimal
+        <center>Sign in to APACOPE</center>
       </Typography>
-
-      <Typography variant="body2" sx={{ mb: 5 }}>
-        Don’t have an account? {''}
-        <Link variant="subtitle2">Get started</Link>
-      </Typography>
-
-
-      <Divider sx={{ my: 3 }}>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          OR
-        </Typography>
-      </Divider>
-
+<LoginForm/>
+<Typography variant="body2" sx={{ mb: 5 }}>
+Don’t have an account? {''}
+<Link variant="subtitle2">Get started</Link>
+</Typography>
     </StyledContent>
   </Container>
 </StyledRoot>
