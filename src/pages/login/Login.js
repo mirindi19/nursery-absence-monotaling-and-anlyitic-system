@@ -39,13 +39,44 @@ const StyledRoot = styled('div')(({ theme }) => ({
   }));
   
 const Login = () => {
-    
+  const mdUp = useResponsive('up', 'md');
   return (
     <div>
     <Helmet>
     <title> Login | Minimal UI </title>
   </Helmet>
+  <StyledRoot>
 
+  {mdUp && (
+    <StyledSection>
+      <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+        Hi, Welcome Back
+      </Typography>
+
+    </StyledSection>
+  )}
+
+  <Container maxWidth="sm">
+    <StyledContent>
+      <Typography variant="h4" gutterBottom>
+        Sign in to Minimal
+      </Typography>
+
+      <Typography variant="body2" sx={{ mb: 5 }}>
+        Don’t have an account? {''}
+        <Link variant="subtitle2">Get started</Link>
+      </Typography>
+
+
+      <Divider sx={{ my: 3 }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          OR
+        </Typography>
+      </Divider>
+
+    </StyledContent>
+  </Container>
+</StyledRoot>
     </div>
   )
 }
