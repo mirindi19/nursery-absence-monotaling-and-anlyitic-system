@@ -10,11 +10,14 @@ import Attandance from "./components/table/Attandance";
 import Subject from "./components/table/Subject";
 import Topnav from "./components/topnav/Topnav";
 import {BrowserRouter,Route,Routes} from "react-router-dom";
-
+import ThemeProvider from './theme';
+import { HelmetProvider } from 'react-helmet-async';
 function App() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
-      <Routes>
+     <ThemeProvider>
+     <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/user-list' element={<Users/>}/>
         <Route path='/teacher-list' element={<Teacher/>}/>
@@ -27,7 +30,9 @@ function App() {
         <Route path='/subject' element={<Subject/>}/>
         <Route path='/topnav' element={<Topnav/>}/>
       </Routes>
+     </ThemeProvider>
     </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
