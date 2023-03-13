@@ -6,6 +6,8 @@ import Class from "./components/table/Class";
 import Children from "./components/table/Children";
 import Message from "./components/table/Message";
 import Parent from "./components/table/Parent";
+import Attandance from "./components/table/Attandance";
+import Subject from "./components/table/Subject";
 import {BrowserRouter,Route,Routes} from "react-router-dom";
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path='/children' element={<Children/>}/>
         <Route path='/message' element={<Message/>}/>
         <Route path='/parent' element={<Parent/>}/>
+        <Route path='/attandance' element={<Attandance/>}/>
+        <Route path='/subject' element={<Subject/>}/>
       </Routes>
     </BrowserRouter>
   );

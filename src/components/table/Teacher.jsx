@@ -56,8 +56,8 @@ const Teacher = () => {
       <TextField
       autoFocus
       margin="dense"
-      id="name"
-      label="Teacher name"
+      id="telephone"
+      label="Telephone"
       type="text"
       fullWidth
       variant="standard"
@@ -65,8 +65,8 @@ const Teacher = () => {
     <TextField
     autoFocus
     margin="dense"
-    id="phone"
-    label="Phone number"
+    id="fullname"
+    label="Full Name"
     type="text"
     fullWidth
     variant="standard"

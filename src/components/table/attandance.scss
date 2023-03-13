@@ -1,0 +1,9 @@
+.attandance{
+    display: flex;
+    .navAttandance{
+        flex: 6;
+        .attandanceTable{
+            padding: 20px;
+        }
+    }
+}

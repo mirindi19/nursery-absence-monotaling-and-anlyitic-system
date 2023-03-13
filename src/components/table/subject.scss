@@ -1,0 +1,10 @@
+.subject{
+    display: flex;
+
+    .navSubject{
+        flex:6;
+        .subjectTable{
+            padding: 20px;
+        }
+    }
+}

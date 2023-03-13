@@ -9,7 +9,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import * as React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 const Message = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   function createData(
     message: string,
     teacherId: String,
@@ -30,6 +45,47 @@ const Message = () => {
     <div className="navMessage">
     <Navbar/>
     <div className="messageTable">
+
+    <Button variant="outlined" onClick={handleClickOpen}>
+    add Message
+  </Button>
+  <Dialog open={open} onClose={handleClose}>
+    <DialogTitle>Registration</DialogTitle>
+    <DialogContent>
+      <TextField
+      autoFocus
+      margin="dense"
+      id="teacherId"
+      label="Teacher Id"
+      type="text"
+      fullWidth
+      variant="standard"
+    />
+    <TextField
+    autoFocus
+    margin="dense"
+    id="message"
+    label="Message"
+    type="text"
+    fullWidth
+    variant="standard"
+  />
+  <TextField
+  autoFocus
+  margin="dense"
+  id="parentId"
+  label="Parent Id"
+  type="text"
+  fullWidth
+  variant="standard"
+/>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClose}>Cancel</Button>
+    <Button onClick={handleClose}>Enter</Button>
+  </DialogActions>
+</Dialog>
+
     <TableContainer component={Paper} className="teacherTable">
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>

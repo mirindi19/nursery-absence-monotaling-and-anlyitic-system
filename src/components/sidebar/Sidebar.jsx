@@ -62,14 +62,18 @@ const Sidebar = () => {
                 <span>Parents</span>
             </li> 
             </Link>
+            <Link to="/attandance" style={{textDecoration:"none"}}>
             <li>
             <BungalowIcon className="icon"/>
             <span>Attandance</span>
         </li> 
+        </Link>
+        <Link to="/subject" style={{textDecoration:"none"}}>
         <li>
         <BungalowIcon className="icon"/>
         <span>Subject</span>
     </li> 
+    </Link>
             </ul>
         </div>
     </div>

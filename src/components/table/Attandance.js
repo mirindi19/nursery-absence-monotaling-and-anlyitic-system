@@ -1,4 +1,4 @@
-import "./children.scss"
+import "./attandance.scss"
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
 import Table from '@mui/material/Table';
@@ -15,7 +15,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-const Children = () => {
+const Attandance = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -26,38 +26,35 @@ const Children = () => {
     setOpen(false);
   };
     function createData(
-        firstname: string,
-        lastname: String,
-        parentId: String,
-        dob:String,
-        classId: String,
+        studentID: string,
+        status: String,
+        date:String,
       ) {
-        return { firstname,lastname,parentId,dob,classId};
+        return {studentID,status,date};
       }
       
       const rows = [
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
+        createData('09','false','09/07/2223'),
+        createData('09','false','09/07/2223'),
+        createData('09','false','09/07/2223'),
       ];
   return (
-    <div className='children'>
+    <div className="attandance">
     <Sidebar/>
-    <div className="navchildren">
+    <div className="navAttandance">
     <Navbar/>
-    <div className="childrenTable">
+    <div className="attandanceTable">
     <Button variant="outlined" onClick={handleClickOpen}>
-    Add Children
+    Attandance
   </Button>
   <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Registration</DialogTitle>
+    <DialogTitle>Registration Attandance</DialogTitle>
     <DialogContent>
       <TextField
       autoFocus
       margin="dense"
-      id="firstName"
-      label="First Name"
+      id="studentId"
+      label="Student Id"
       type="text"
       fullWidth
       variant="standard"
@@ -65,8 +62,8 @@ const Children = () => {
     <TextField
     autoFocus
     margin="dense"
-    id="lastName"
-    label="Last Name"
+    id="status"
+    label="status"
     type="text"
     fullWidth
     variant="standard"
@@ -74,28 +71,10 @@ const Children = () => {
   <TextField
   autoFocus
   margin="dense"
-  id="dob"
+  id="date"
   type="date"
   fullWidth
   variant="standard"
-/>
-<TextField
-autoFocus
-margin="dense"
-id="parentId"
-label="Parent Id"
-type="text"
-fullWidth
-variant="standard"
-/>
-<TextField
-autoFocus
-margin="dense"
-id="classId"
-label="classId"
-type="text"
-fullWidth
-variant="standard"
 />
   </DialogContent>
   <DialogActions>
@@ -107,11 +86,9 @@ variant="standard"
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>First Name</TableCell>
-          <TableCell align="right">Last Name</TableCell>
-          <TableCell align="right">Parent Id</TableCell>
-          <TableCell align="right">Date of Birth</TableCell>
-          <TableCell align="right">Class Id</TableCell>
+          <TableCell>Student Id</TableCell>
+          <TableCell align="right">Status</TableCell>
+          <TableCell align="right">Date</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -121,12 +98,10 @@ variant="standard"
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
-              {row.firstname}
+              {row.studentID}
             </TableCell>
-            <TableCell align="right">{row.lastname}</TableCell>
-            <TableCell align="right">{row.parentId}</TableCell>
-            <TableCell align="right">{row.dob}</TableCell>
-            <TableCell align="right">{row.classId}</TableCell>
+            <TableCell align="right">{row.status}</TableCell>
+            <TableCell align="right">{row.date}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -138,4 +113,4 @@ variant="standard"
   )
 }
 
-export default Children
+export default Attandance

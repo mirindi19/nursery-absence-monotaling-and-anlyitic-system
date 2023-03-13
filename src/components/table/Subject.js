@@ -1,4 +1,4 @@
-import "./children.scss"
+import "./subject.scss"
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
 import Table from '@mui/material/Table';
@@ -15,7 +15,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-const Children = () => {
+const Subject = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -26,29 +26,27 @@ const Children = () => {
     setOpen(false);
   };
     function createData(
-        firstname: string,
-        lastname: String,
-        parentId: String,
-        dob:String,
-        classId: String,
+        subjectName: string,
+        video: String,
+        file:String,
+        teacherId:String,
       ) {
-        return { firstname,lastname,parentId,dob,classId};
+        return {subjectName,video,file,teacherId};
       }
       
       const rows = [
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
+        createData('English','video','file1','009'),
+        createData('English','video','file1','009'),
+        createData('English','video','file1','009'),
       ];
   return (
-    <div className='children'>
+    <div className="subject">
     <Sidebar/>
-    <div className="navchildren">
+    <div className="navSubject">
     <Navbar/>
-    <div className="childrenTable">
+    <div className="subjectTable">
     <Button variant="outlined" onClick={handleClickOpen}>
-    Add Children
+    Add Subject
   </Button>
   <Dialog open={open} onClose={handleClose}>
     <DialogTitle>Registration</DialogTitle>
@@ -56,8 +54,8 @@ const Children = () => {
       <TextField
       autoFocus
       margin="dense"
-      id="firstName"
-      label="First Name"
+      id="subjectName"
+      label="Subject Name"
       type="text"
       fullWidth
       variant="standard"
@@ -65,25 +63,24 @@ const Children = () => {
     <TextField
     autoFocus
     margin="dense"
-    id="lastName"
-    label="Last Name"
-    type="text"
+    id="video"
+    type="file"
     fullWidth
     variant="standard"
   />
   <TextField
   autoFocus
   margin="dense"
-  id="dob"
-  type="date"
+  id="files"
+  type="file"
   fullWidth
   variant="standard"
 />
 <TextField
 autoFocus
 margin="dense"
-id="parentId"
-label="Parent Id"
+id="teacherId"
+label="Teacher Id"
 type="text"
 fullWidth
 variant="standard"
@@ -107,11 +104,10 @@ variant="standard"
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>First Name</TableCell>
-          <TableCell align="right">Last Name</TableCell>
-          <TableCell align="right">Parent Id</TableCell>
-          <TableCell align="right">Date of Birth</TableCell>
-          <TableCell align="right">Class Id</TableCell>
+          <TableCell>Subject Name</TableCell>
+          <TableCell align="right">Video</TableCell>
+          <TableCell align="right">File</TableCell>
+          <TableCell align="right">Teacher Id</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -121,12 +117,11 @@ variant="standard"
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
-              {row.firstname}
+              {row.subjectName}
             </TableCell>
-            <TableCell align="right">{row.lastname}</TableCell>
-            <TableCell align="right">{row.parentId}</TableCell>
-            <TableCell align="right">{row.dob}</TableCell>
-            <TableCell align="right">{row.classId}</TableCell>
+            <TableCell align="right">{row.video}</TableCell>
+            <TableCell align="right">{row.file}</TableCell>
+            <TableCell align="right">{row.teacherId}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -138,4 +133,4 @@ variant="standard"
   )
 }
 
-export default Children
+export default Subject
