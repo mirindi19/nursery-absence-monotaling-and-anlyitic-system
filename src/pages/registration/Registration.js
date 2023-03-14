@@ -1,20 +1,16 @@
 import React from 'react'
-import "./login.scss"
+import "./registration.scss"
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
 import {Link,Container, Typography, Divider, Stack, Button } from '@mui/material';
 // hooks
 import useResponsive from "../../hooks/useResponsive"
-// components
-// import Logo from '../components/logo';
-// import Iconify from '../components/iconify';
-// // sections
-// import { LoginForm } from '../sections/auth/login';
-import LoginForm from '../../components/form/LoginForm';
+
+import RegistrationForm from '../../components/form/RegistrationForm';
 import IMAGES from "../../Assets/images";
 // import { Link } from 'react-router-dom';
-import Registration from '../registration/Registration';
+// import Registration from '../registration/Registration';
 
 const StyledRoot = styled('div')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
@@ -42,7 +38,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
     padding: theme.spacing(12, 0),
   }));
   
-const Login = () => {
+const Registration = () => {
   const mdUp = useResponsive('up', 'md');
   return (
     <div>
@@ -63,13 +59,12 @@ const Login = () => {
   <Container maxWidth="sm">
     <StyledContent>
       <Typography variant="h4" gutterBottom>
-       Sign in 
+       Sign up 
       </Typography>
       <Typography variant="body2" sx={{ mb: 5 }}>
-       Don’t have an account? {''}
-  <Link href='Registration' variant="subtitle2">Get started</Link>
-  </Typography>
-<LoginForm/>
+      By creating account you will be able to commit more with us.
+ </Typography>
+<RegistrationForm/>
     </StyledContent>
   </Container>
 </StyledRoot>
@@ -78,4 +73,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Registration
