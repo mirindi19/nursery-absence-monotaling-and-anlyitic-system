@@ -15,6 +15,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useDispatch, useSelector } from "react-redux";
+import { getTeachersAction } from "../../redux/actions/teacherListAction";
 
 const Teacher = () => {
   const [open, setOpen] = React.useState(false);
@@ -27,19 +29,27 @@ const Teacher = () => {
     setOpen(false);
   };
 
-  function createData(
-    teacherName: string,
-    phoneNumber: String,
-  ) {
-    return { teacherName,phoneNumber};
+
+  const dispatch=useDispatch();
+  const teachersList=useSelector((state)=>state.teachersList)
+  const [teachersListDetails,setTeachersListDetails]=React.useState([])
+  React.useEffect(()=>{
+   async function fetchData(){
+    await dispatch(getTeachersAction())
+   }
+   fetchData()
+  },[])
+
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!teachersList.loading){
+    if(teachersList.details.length>0){
+      setTeachersListDetails(teachersList.details)
+    }
   }
-  
-  const rows = [
-    createData('mirindisaidi','0789997767'),
-    createData('mirindisaidi','0789997767'),
-    createData('mirindisaidi','0789997767'),
-    createData('mirindisaidi','0789997767'),
-  ];
+    }
+    fetchData()
+   },[teachersList.details])
 
   return (
     <div className='teacher'>
@@ -82,19 +92,21 @@ const Teacher = () => {
   <TableHead>
     <TableRow>
       <TableCell>Teacher Name</TableCell>
-      <TableCell align="right">Telphone Number</TableCell>
+      <TableCell align="center">Phone Number</TableCell>
+      <TableCell align="center">Create At</TableCell>
     </TableRow>
   </TableHead>
   <TableBody>
-    {rows.map((row) => (
+    {teachersListDetails.map((row) => (
       <TableRow
-        key={row.name}
+        key={row._id}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component="th" scope="row">
-          {row.teacherName}
+          {row.fullName}
         </TableCell>
-        <TableCell align="right">{row.phoneNumber}</TableCell>
+        <TableCell align="center">{row.telephone}</TableCell>
+        <TableCell align="center">{row.createdAt}</TableCell>
       </TableRow>
     ))}
   </TableBody>

@@ -15,6 +15,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { getClassesAction } from "../../redux/actions/getClassesAction";
+import { useDispatch,useSelector
+ } from "react-redux";
 const Class = () => {
   const [open, setOpen] = React.useState(false);
 
@@ -25,19 +28,28 @@ const Class = () => {
   const handleClose = () => {
     setOpen(false);
   };
-    function createData(
-        className: string,
-        teacherId: String,
-      ) {
-        return { className,teacherId};
+   
+      const dispatch=useDispatch();
+      const getClasses=useSelector((state)=>state.getClasses)
+      const [classesList,setClassesList]=React.useState([])
+      React.useEffect(()=>{
+       async function fetchData(){
+        await dispatch(getClassesAction())
+       }
+       fetchData()
+      },[])
+    
+      React.useEffect(()=>{
+        async function fetchData(){
+      if(!getClasses.loading){
+        if(getClasses.details.length>0){
+          setClassesList(getClasses.details)
+        }
       }
-      
-      const rows = [
-        createData('mirindisaidi','0789997767'),
-        createData('mirindisaidi','0789997767'),
-        createData('mirindisaidi','0789997767'),
-        createData('mirindisaidi','0789997767'),
-      ];
+        }
+        fetchData()
+       },[getClasses.details])
+    
   return (
     <div className='course'>
     <Sidebar/>
@@ -80,19 +92,23 @@ const Class = () => {
       <TableHead>
         <TableRow>
           <TableCell>Class Name</TableCell>
-          <TableCell align="right">Teacher Id</TableCell>
+          <TableCell align="center">Teacher  Name</TableCell>
+          <TableCell align="center">Teacher Id</TableCell>
+          <TableCell align="center">Created At</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        {classesList.map((row) => (
           <TableRow
-            key={row.name}
+            key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
               {row.className}
             </TableCell>
-            <TableCell align="right">{row.teacherId}</TableCell>
+            <TableCell align="center">{row.teacherName}</TableCell>
+            <TableCell align="center">{row.teacherId}</TableCell>
+            <TableCell align="center">{row.createdAt}</TableCell>
           </TableRow>
         ))}
       </TableBody>

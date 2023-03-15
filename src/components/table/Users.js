@@ -10,24 +10,34 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { getUsersAction } from "../../redux/actions/getUsersAction";
+import { useDispatch,useSelector } from "react-redux";
+
 const Users = () => {
-  function createData(
-    email: string,
-    password: String,
-    isActive: String,
-    teacherId: String,
-    parentId: String,
-    resetLink:String,
-  ) {
-    return { email, password, isActive, teacherId, parentId,resetLink};
-  }
+ 
   
-  const rows = [
-    createData('saidi@gmail.com', 'kjimo', 'true', 'mirindi', 'saidi','link'),
-    createData('saidi@gmail.com', 'kjimo', 'true', 'mirindi', 'saidi','link'),
-    createData('saidi@gmail.com', 'kjimo', 'true', 'mirindi', 'saidi','link'),
-    createData('saidi@gmail.com', 'kjimo', 'true', 'mirindi', 'saidi','link'),
-  ];
+
+  const dispatch=useDispatch();
+  const getUsers=useSelector((state)=>state.getUsers)
+  const [usersList,setUsersList]=React.useState([])
+  React.useEffect(()=>{
+   async function fetchData(){
+    await dispatch(getUsersAction())
+   }
+   fetchData()
+  },[])
+
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!getUsers.loading){
+    if(getUsers.details.length>0){
+      setUsersList(getUsers.details)
+    }
+  }
+    }
+    fetchData()
+   },[getUsers.details])
+
 
   return (
     <div className='users'>
@@ -40,27 +50,25 @@ const Users = () => {
        <TableHead>
          <TableRow>
            <TableCell>Email</TableCell>
-           <TableCell align="right">Password</TableCell>
-           <TableCell align="right">isActive</TableCell>
-           <TableCell align="right">Teacher</TableCell>
-           <TableCell align="right">Parent</TableCell>
-           <TableCell align="right">ResetLink</TableCell>
+           <TableCell align="center">Role</TableCell>
+           <TableCell align="center">isActive</TableCell>
+           <TableCell align="center">Teacher</TableCell>
+           <TableCell align="center">Parent</TableCell>
          </TableRow>
        </TableHead>
        <TableBody>
-         {rows.map((row) => (
+         {usersList.map((row) => (
            <TableRow
-             key={row.name}
+             key={row._id}
              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
            >
              <TableCell component="th" scope="row">
                {row.email}
              </TableCell>
-             <TableCell align="right">{row.password}</TableCell>
-             <TableCell align="right">{row.isActive}</TableCell>
-             <TableCell align="right">{row.teacherId}</TableCell>
-             <TableCell align="right">{row.parentId}</TableCell>
-             <TableCell align="right">{row.resetLink}</TableCell>
+             <TableCell align="center">{row.role}</TableCell>
+             <TableCell align="center">{row.isActive}</TableCell>
+             <TableCell align="center">{row.teacherId}</TableCell>
+             <TableCell align="center">{row.parentId}</TableCell>
            </TableRow>
          ))}
        </TableBody>

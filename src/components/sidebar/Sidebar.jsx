@@ -20,7 +20,7 @@ const Sidebar = () => {
             <ul>
       
                 <p className="title">MAIN MENU</p>
-                <Link to="/" style={{textDecoration:"none"}}>
+                <Link to="/dashboard" style={{textDecoration:"none"}}>
                 <li>
                       <DashboardIcon className="icon"/>
                     <span>dashboard</span>
