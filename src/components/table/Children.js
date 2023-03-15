@@ -15,6 +15,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from "react-redux";
+import { getStudentsAction } from "../../redux/actions/getStudentsAction";
 const Children = () => {
   const [open, setOpen] = React.useState(false);
 
@@ -25,22 +27,28 @@ const Children = () => {
   const handleClose = () => {
     setOpen(false);
   };
-    function createData(
-        firstname: string,
-        lastname: String,
-        parentId: String,
-        dob:String,
-        classId: String,
-      ) {
-        return { firstname,lastname,parentId,dob,classId};
-      }
-      
-      const rows = [
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-        createData('mirindi','saidi','0990','dob','78'),
-      ];
+   
+  const dispatch=useDispatch();
+  const getStudents=useSelector((state)=>state.getStudents)
+  const [studentsList,setStudentsList]=React.useState([])
+  React.useEffect(()=>{
+   async function fetchData(){
+    await dispatch(getStudentsAction())
+   }
+   fetchData()
+  },[])
+
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!getStudents.loading){
+    if(getStudents.details.length>0){
+      setStudentsList(getStudents.details)
+    }
+  }
+    }
+    fetchData()
+   },[getStudents.details])
+
   return (
     <div className='children'>
     <Sidebar/>
@@ -108,25 +116,25 @@ variant="standard"
       <TableHead>
         <TableRow>
           <TableCell>First Name</TableCell>
-          <TableCell align="right">Last Name</TableCell>
-          <TableCell align="right">Parent Id</TableCell>
-          <TableCell align="right">Date of Birth</TableCell>
-          <TableCell align="right">Class Id</TableCell>
+          <TableCell align="center">Last Name</TableCell>
+          <TableCell align="center">Reg Number</TableCell>
+          <TableCell align="center">Date of Birth</TableCell>
+          <TableCell align="center">Parent Phone Number</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        {studentsList.map((row) => (
           <TableRow
-            key={row.name}
+            key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
-              {row.firstname}
+              {row.firstName}
             </TableCell>
-            <TableCell align="right">{row.lastname}</TableCell>
-            <TableCell align="right">{row.parentId}</TableCell>
-            <TableCell align="right">{row.dob}</TableCell>
-            <TableCell align="right">{row.classId}</TableCell>
+            <TableCell align="center">{row.lastName}</TableCell>
+            <TableCell align="center">{row.regNumber}</TableCell>
+            <TableCell align="center">{row.dob}</TableCell>
+            <TableCell align="center">{row.parentId}</TableCell>
           </TableRow>
         ))}
       </TableBody>
