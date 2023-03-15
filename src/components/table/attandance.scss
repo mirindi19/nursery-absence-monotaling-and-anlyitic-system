@@ -1,5 +1,6 @@
 .attandance{
     display: flex;
+    background-color: #fff;
     .navAttandance{
         flex: 6;
         .attandanceTable{
@@ -7,6 +8,7 @@
             .teacherTable{
                 margin-top: 10px;
                 width: 70%;
+                background-color: #fff;
             }
         }
     }
