@@ -1,6 +1,6 @@
 .hero-image{
     width: 100%;
-    min-height: 90vh;
+    min-height: 89.7vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../Assets/images/hero-image.jpg);
     background-position: center;
     background-repeat: no-repeat;
