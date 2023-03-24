@@ -4,6 +4,10 @@ import { combineReducers } from "redux";
    import teachersListReducer from "./teacherListReducer";
    import getClassesReducer from "./getClassesReducer";
    import getStudentsReducer from "./getStudentsReducer";
+   import getParentsReducer from "./getParentsReducer";
+
+   import addTeacherReducer from "./addTeacherReducer";
+   import signupReducer from "./signupReducer";
  
 
 const allReducers = combineReducers({
@@ -12,6 +16,10 @@ const allReducers = combineReducers({
      teachersList:teachersListReducer,
      getClasses: getClassesReducer,
      getStudents:getStudentsReducer,
+     getParents:getParentsReducer,
+
+     addTeacher:addTeacherReducer,
+     signup:signupReducer,
    
 });
 

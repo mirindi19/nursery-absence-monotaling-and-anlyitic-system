@@ -17,10 +17,27 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachersAction } from "../../redux/actions/teacherListAction";
+import { addTeacherAction } from "../../redux/actions/addTeacherAction";
+import { Alert, Collapse, IconButton } from "@mui/material";
+import CloseIcon  from "@mui/icons-material/Close";
 
 const Teacher = () => {
   const [open, setOpen] = React.useState(false);
 
+  const dispatch=useDispatch();
+  const teachersList=useSelector((state)=>state.teachersList)
+  const addTeacher=useSelector((state)=>state.addTeacher);
+  const [teachersListDetails,setTeachersListDetails]=React.useState([])
+
+  const [telephone,setTelePhone]=React.useState("")
+  const [fullName,setFullName]=React.useState("")
+
+  const [telephoneerror,setTelePhoneerror]=React.useState("")
+  const [fullNameerror,setFullNameerror]=React.useState("")
+  const [openError, setOpenError] = React.useState(true);
+  const [openSuccess, setOpenSuccess] = React.useState(true);
+  const [errorMessage,setErrorMessage]=React.useState("")
+  const [successMessage,setSuccessMessage]=React.useState("")
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,11 +45,28 @@ const Teacher = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleCloseMessage=()=>{
 
+setOpenError(false)
+setOpenSuccess(false)
+  }
 
-  const dispatch=useDispatch();
-  const teachersList=useSelector((state)=>state.teachersList)
-  const [teachersListDetails,setTeachersListDetails]=React.useState([])
+  const handleSubmit=async (e)=>{
+    e.preventDefault()
+if(telephone==""){
+  setTelePhoneerror("Phone number is required")
+}
+else if(fullName==""){
+  setFullNameerror("Full Name is required");
+}
+else{
+ setTelePhoneerror("")
+ setFullNameerror("")
+ await dispatch(addTeacherAction(telephone,fullName))
+}
+  }
+
+ 
   React.useEffect(()=>{
    async function fetchData(){
     await dispatch(getTeachersAction())
@@ -45,11 +79,25 @@ const Teacher = () => {
   if(!teachersList.loading){
     if(teachersList.details.length>0){
       setTeachersListDetails(teachersList.details)
+
     }
   }
     }
     fetchData()
    },[teachersList.details])
+
+   React.useEffect(()=>{
+    async function fetchData(){
+  if(!addTeacher.loading){
+    if(addTeacher.details.length>0){
+     
+      setSuccessMessage(addTeacher.details)
+      await dispatch(addTeacherAction(telephone,fullName))
+    }
+  }
+    }
+    fetchData()
+   },[addTeacher.details])
 
   return (
     <div className='teacher'>
@@ -61,9 +109,56 @@ const Teacher = () => {
     Add Teacher
   </Button>
   <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Registration</DialogTitle>
+    <DialogTitle>Tearcher Registration Form</DialogTitle>
+    {
+            !addTeacher.error ? null : (
+                <Collapse in={openError}>
+                    <Alert severity="error"
+                        action={
+                            <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"onClick={handleCloseMessage}>
+                        <CloseIcon
+                        fontSize="inherit"/></IconButton>
+                        }
+                        sx={
+                            {mb: 0.2}
+                    }>
+                        {/* {errorMessage==="Provided NID is not registered to the head of the household"?`${t("cbhi:providedNIDisnotregisteredtotheheadofthehousehold")}`:errorMessage} */}
+                        {addTeacher.error}
+                         </Alert>
+                </Collapse>
+            )
+        }
+    {
+            !successMessage ? null : (
+                <Collapse in={openSuccess}>
+                    <Alert severity="success"
+                        action={
+                            <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"onClick={handleCloseMessage}>
+                        <CloseIcon
+                        fontSize="inherit"/></IconButton>
+                        }
+                        sx={
+                            {mb: 0.2}
+                    }>
+                        {/* {errorMessage==="Provided NID is not registered to the head of the household"?`${t("cbhi:providedNIDisnotregisteredtotheheadofthehousehold")}`:errorMessage} */}
+                        {successMessage}
+                         </Alert>
+                </Collapse>
+            )
+        }
     <DialogContent>
       <TextField
+      name="telephone"
+      value={telephone}
+      onChange={(e)=>setTelePhone(e.target.value)}
+      helperText={telephoneerror? telephoneerror : ""}
+      error={telephoneerror}
       autoFocus
       margin="dense"
       id="telephone"
@@ -73,9 +168,14 @@ const Teacher = () => {
       variant="standard"
     />
     <TextField
+    name="fullName"
+    value={fullName}
+    onChange={(e)=>setFullName(e.target.value)}
+    helperText={fullNameerror? fullNameerror: ""}
+    error={fullNameerror}
     autoFocus
     margin="dense"
-    id="fullname"
+    id="fullName"
     label="Full Name"
     type="text"
     fullWidth
@@ -84,7 +184,11 @@ const Teacher = () => {
   </DialogContent>
   <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Enter</Button>
+    {
+      addTeacher.loading?"Loading":
+      <Button onClick={(e)=>handleSubmit(e)}>Submit</Button>
+    }
+   
   </DialogActions>
 </Dialog>
 <TableContainer component={Paper} className="teacherTable">

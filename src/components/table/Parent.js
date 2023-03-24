@@ -15,6 +15,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from "react-redux";
+import { getParentsAction } from "../../redux/actions/getParentsAction";
 const Parent = () => {
   const [open, setOpen] = React.useState(false);
 
@@ -25,20 +27,27 @@ const Parent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-    function createData(
-        futherName: string,
-        motherName: String,
-        telephone:String,
-        email:String,
-      ) {
-        return {futherName,motherName,telephone,email};
-      }
-      
-      const rows = [
-        createData('mirindisaidi','jimmy','0789998738','miri@gmail.com'),
-        createData('mirindisaidi','jimmy','0789998738','miri@gmail.com'),
-        createData('mirindisaidi','jimmy','0789998738','miri@gmail.com'),
-      ];
+  const dispatch=useDispatch();
+  const getParents=useSelector((state)=>state.getParents)
+  const [parentsList,setParentsList]=React.useState([])
+  React.useEffect(()=>{
+   async function fetchData(){
+    await dispatch(getParentsAction())
+   }
+   fetchData()
+  },[])
+
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!getParents.loading){
+    if(getParents.details.length>0){
+      setParentsList(getParents.details)
+    }
+  }
+    }
+    fetchData()
+   },[getParents.details])
+
   return (
     <div className="parent">
     <Sidebar/>
@@ -97,24 +106,24 @@ variant="standard"
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>Futher Name</TableCell>
-          <TableCell align="right">Mother Name</TableCell>
-          <TableCell align="right">Telephone</TableCell>
-          <TableCell align="right">Email</TableCell>
+          <TableCell>Father Name</TableCell>
+          <TableCell align="center">Mother Name</TableCell>
+          <TableCell align="center">Telephone</TableCell>
+          <TableCell align="center">Created At</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        {parentsList.map((row) => (
           <TableRow
-            key={row.name}
+            key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
-              {row.futherName}
+              {row.fatherName}
             </TableCell>
-            <TableCell align="right">{row.motherName}</TableCell>
-            <TableCell align="right">{row.telephone}</TableCell>
-            <TableCell align="right">{row.email}</TableCell>
+            <TableCell align="center">{row.motherName}</TableCell>
+            <TableCell align="center">{row.telephone}</TableCell>
+            <TableCell align="center">{row.createdAt}</TableCell>
           </TableRow>
         ))}
       </TableBody>
