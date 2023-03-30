@@ -26,9 +26,9 @@ const Teacher = () => {
 
   const dispatch=useDispatch();
   const teachersList=useSelector((state)=>state.teachersList)
-  const addTeacher=useSelector((state)=>state.addTeacher);
-  const [teachersListDetails,setTeachersListDetails]=React.useState([])
 
+  const [teachersListDetails,setTeachersListDetails]=React.useState([])
+  const addTeacher=useSelector((state)=>state.addTeacher);
   const [telephone,setTelePhone]=React.useState("")
   const [fullName,setFullName]=React.useState("")
 
@@ -36,7 +36,6 @@ const Teacher = () => {
   const [fullNameerror,setFullNameerror]=React.useState("")
   const [openError, setOpenError] = React.useState(true);
   const [openSuccess, setOpenSuccess] = React.useState(true);
-  const [errorMessage,setErrorMessage]=React.useState("")
   const [successMessage,setSuccessMessage]=React.useState("")
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,15 +88,18 @@ else{
    React.useEffect(()=>{
     async function fetchData(){
   if(!addTeacher.loading){
-    if(addTeacher.details.length>0){
-     
-      setSuccessMessage(addTeacher.details)
-      await dispatch(addTeacherAction(telephone,fullName))
+    if(addTeacher.details.length!==0){
+      setSuccessMessage(addTeacher.details.message)
+      setOpenSuccess(true)
+      setTelePhone("")
+      setFullName("")
+      await dispatch(getTeachersAction())
     }
   }
     }
     fetchData()
    },[addTeacher.details])
+
 
   return (
     <div className='teacher'>

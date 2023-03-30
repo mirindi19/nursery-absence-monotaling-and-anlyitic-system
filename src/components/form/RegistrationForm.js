@@ -57,7 +57,6 @@ const RegistrationForm = () => {
           setEmail("")
           setPassword("")
           setTelephone("")
-
       }
     }
       }

@@ -15,9 +15,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from "react-redux";
+import { getMessageByteacherAction } from "../../redux/actions/getMessageByteacherAction";
 const Message = () => {
   const [open, setOpen] = React.useState(false);
+  const dispatch=useDispatch();
+  const getMessageByteacher=useSelector((state)=>state.getMessageByteacher)
 
+  const [messageDetails,setMessageDetails]=React.useState([])
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,20 +30,24 @@ const Message = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  function createData(
-    message: string,
-    teacherId: String,
-    parentId:String,
-  ) {
-    return {message,teacherId,parentId};
+
+  React.useEffect(()=>{
+    async function fetchData(){
+     await dispatch(getMessageByteacherAction())
+    }
+    fetchData()
+   },[])
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!getMessageByteacher.loading){
+    if(getMessageByteacher.details.length>0){
+      setMessageDetails(getMessageByteacher.details)
+
+    }
   }
-  
-  const rows = [
-    createData('mirindisaidi','888','990'),
-    createData('mirindisaidi','888','990'),
-    createData('mirindisaidi','888','990'),
-    createData('mirindisaidi','888','990'),
-  ];
+    }
+    fetchData()
+   },[getMessageByteacher.details])
   return (
     <div className="message">
     <Sidebar/>
@@ -91,21 +100,21 @@ const Message = () => {
       <TableHead>
         <TableRow>
           <TableCell>Message</TableCell>
-          <TableCell align="right">Teacher Id</TableCell>
-          <TableCell align="right">Parent Id</TableCell>
+          <TableCell align="center">Teacher Id</TableCell>
+          <TableCell align="center">Parent Id</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        {messageDetails.map((row) => (
           <TableRow
-            key={row.name}
+            key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
               {row.message}
             </TableCell>
-            <TableCell align="right">{row.teacherId}</TableCell>
-            <TableCell align="right">{row.parentId}</TableCell>
+            <TableCell align="center">{row.teacherId}</TableCell>
+            <TableCell align="center">{row.parentId}</TableCell>
           </TableRow>
         ))}
       </TableBody>

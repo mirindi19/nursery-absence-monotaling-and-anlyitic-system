@@ -8,6 +8,9 @@ import { combineReducers } from "redux";
 
    import addTeacherReducer from "./addTeacherReducer";
    import signupReducer from "./signupReducer";
+   import getMessageByteacherReducer from "./getMessageByteacherReducer";
+   import addClassReducer from "./addClassReducer";
+   import addStudentReducer from "./addStudentReducer";
  
 
 const allReducers = combineReducers({
@@ -20,7 +23,10 @@ const allReducers = combineReducers({
 
      addTeacher:addTeacherReducer,
      signup:signupReducer,
+     getMessageByteacher:getMessageByteacherReducer,
+     addClass:addClassReducer,
    
+     addStudent:addStudentReducer,
 });
 
 export default allReducers;

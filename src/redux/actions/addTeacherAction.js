@@ -14,7 +14,7 @@ export const addTeacherAction = (telephone,fullName) => async (dispatch) => {
     });
     const { data } = await res;
     if(data.statusCode===200){
-        dispatch(addTeacherSuccess(data.message));
+        dispatch(addTeacherSuccess(data));
       
     }else{
         dispatch(addTeacherFailure(data.message));  

@@ -17,8 +17,32 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentsAction } from "../../redux/actions/getStudentsAction";
+import { getClassesAction } from "../../redux/actions/getClassesAction";
+import { MenuItem } from "@mui/material";
 const Children = () => {
   const [open, setOpen] = React.useState(false);
+  const dispatch=useDispatch();
+  const getStudents=useSelector((state)=>state.getStudents)
+  const getClasses=useSelector((state)=>state.getClasses)
+  const [studentsList,setStudentsList]=React.useState([])
+  const [classesList,setClassesList]=React.useState([])
+  React.useEffect(()=>{
+   async function fetchData(){
+    await dispatch(getClassesAction())
+   }
+   fetchData()
+  },[])
+
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!getClasses.loading){
+    if(getClasses.details.length>0){
+      setClassesList(getClasses.details)
+    }
+  }
+    }
+    fetchData()
+   },[getClasses.details])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,9 +52,7 @@ const Children = () => {
     setOpen(false);
   };
    
-  const dispatch=useDispatch();
-  const getStudents=useSelector((state)=>state.getStudents)
-  const [studentsList,setStudentsList]=React.useState([])
+ 
   React.useEffect(()=>{
    async function fetchData(){
     await dispatch(getStudentsAction())
@@ -98,17 +120,22 @@ variant="standard"
 />
 <TextField
 autoFocus
+select
 margin="dense"
 id="classId"
-label="classId"
+label="Select Class Name"
 type="text"
 fullWidth
 variant="standard"
-/>
+>
+{classesList.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>{option.className}</MenuItem>
+                    ))} 
+  </TextField>
   </DialogContent>
   <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Enter</Button>
+    <Button onClick={handleClose}>Submit</Button>
   </DialogActions>
 </Dialog>
     <TableContainer component={Paper} className="teacherTable">
