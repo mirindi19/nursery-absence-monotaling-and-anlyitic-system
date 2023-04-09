@@ -1,3 +1,4 @@
+import './topnav.scss'
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -40,7 +41,7 @@ const Topnav = () => {
       <Toolbar disableGutters>
        <Box 
        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-        <img src={IMAGES.logo} alt="" className='avantare'/>
+        <img src={IMAGES.logo} alt="" className='logo'/>
         
         <Typography
           variant="h6"
@@ -52,12 +53,15 @@ const Topnav = () => {
             display: { xs: 'none', md: 'flex' },
             fontFamily: 'monospace',
             fontWeight: 700,
-            letterSpacing: '.3rem',
+            letterSpacing: '.1rem',
             color: 'inherit',
             textDecoration: 'none',
+            
           }}
         >
-          APACOPE
+          <p className='apacope'>
+          APACOPE 
+          </p>
         </Typography>
         </Box>
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -96,7 +100,10 @@ const Topnav = () => {
             ))}
           </Menu>
         </Box>
-        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+     <Box
+   sx={{ display: { xs: 'flex', md: 'none' }, mr: 1,marginLeft:15  }} 
+     >
+     <img src={IMAGES.logo} alt="" className='logo'/>
         <Typography
           variant="h5"
           noWrap
@@ -106,16 +113,19 @@ const Topnav = () => {
             mr: 2,
             display: { xs: 'flex', md: 'none' },
             flexGrow: 1,
+          
             fontFamily: 'monospace',
             fontWeight: 700,
             letterSpacing: '.3rem',
             color: 'inherit',
             textDecoration: 'none',
+            
           }}
         >
           APACOPE
         </Typography>
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        </Box>
+        <Box sx={{ flexGrow: 1,  marginLeft:60, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (
             <Button
               key={page}
@@ -128,11 +138,6 @@ const Topnav = () => {
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-            </IconButton>
-          </Tooltip>
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"

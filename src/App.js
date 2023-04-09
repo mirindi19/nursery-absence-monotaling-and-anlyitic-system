@@ -13,7 +13,8 @@ import Registration from "./pages/registration/Registration";
 import {BrowserRouter,Route,Routes} from "react-router-dom";
 import ThemeProvider from './theme';
 import { HelmetProvider } from 'react-helmet-async';
-import Landing from"./pages/hero/Hero"
+import Landing from"./pages/hero/Hero";
+import TeacherPages from "./components/teacherPage/TeacherPage";
 function App() {
   return (
     <HelmetProvider>
@@ -33,6 +34,7 @@ function App() {
         <Route path='/topnav' element={<Topnav/>}/>
         <Route path='/registration' element={<Registration/>}/>
         <Route path='/landing' element={<Landing/>}/>
+        <Route path='/TeacherPages' element={<TeacherPages/>}/>
       </Routes>
      </ThemeProvider>
     </BrowserRouter>

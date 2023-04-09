@@ -10,7 +10,7 @@ const Hero = () => {
       <div className='hero-text'>
         <h2>Nursery Absence Monotaling and<br></br> Anlyitic System</h2>
         
-         <p>The Gender Promotion and Women Empowerment Directorate oversees all interventions<br></br> related to Gender Equality and Women Empowerment, develops all policies related to the<br></br> advancement of Gender equality and Women Empowerment. It also coordinates all partners<br></br> who intervene in the areas of Gender Promotion and Women Empowerment.</p>
+         <p>Welcome to Groupe Scolaire APACOPE where the bright future of your child Begins. You are<br></br> all encouraged to enroll and entrust the education of your beloved children with us..</p>
          <Link to="/login-form" style={{textDecoration:"none"}}>
          <button className='btn'>
          Start
