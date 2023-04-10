@@ -8,13 +8,21 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ListIcon from '@mui/icons-material/List';
 import { Button } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
 //   const history=useHistory()
 //   const handleLogout=()=>{
 //     localStorage.removeItem('access-token')
 //     history.push("/",{push:true})
 // }
+const navigate=useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("x-access-token");
+    localStorage.removeItem("user-data");
+    navigate('/')
+
+  };
   return (
     <div className='navbar'>
      <div className="wrapper">
@@ -23,7 +31,7 @@ const Navbar = () => {
    </div>
       <div className="items">
         <div className="item">
-        <Button>
+        <Button onClick={handleLogout}>
         <ExitToAppIcon className="icon"/>
         <span >Logout</span>
         </Button>

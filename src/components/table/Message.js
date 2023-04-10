@@ -42,7 +42,6 @@ const Message = () => {
   if(!getMessageByteacher.loading){
     if(getMessageByteacher.details.length>0){
       setMessageDetails(getMessageByteacher.details)
-
     }
   }
     }

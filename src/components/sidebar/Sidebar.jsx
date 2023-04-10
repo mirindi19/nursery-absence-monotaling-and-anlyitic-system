@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import IMAGES from "../../Assets/images";
 const Sidebar = () => {
+const data= JSON.parse(localStorage.getItem("user-data"));
+const role=data.role;
 
   return (
     <div className='sidebar'>
@@ -26,13 +28,16 @@ const Sidebar = () => {
                     <span>dashboard</span>
                 </li>
                 </Link>
-                <Link to="/user-list" style={{textDecoration:"none"}}>
-                <li>
-                <PersonOutlineOutlinedIcon className="icon"/>
-                    <span>Users</span>
-                </li>
-                </Link>
-                <Link to="/teacher-list" style={{textDecoration:"none"}}>
+                {
+                    role=="Admin"?
+                    <>
+                     <Link to="/user-list" style={{textDecoration:"none"}}>
+                    <li>
+                    <PersonOutlineOutlinedIcon className="icon"/>
+                        <span>Users</span>
+                    </li>
+                    </Link>
+                    <Link to="/teacher-list" style={{textDecoration:"none"}}>
                 <li>
                     <BorderColorIcon className="icon"/>
                     <span>teacher</span>
@@ -50,24 +55,38 @@ const Sidebar = () => {
                     <span>chidren</span>
                 </li>  
                 </Link> 
-                <Link to="/message" style={{textDecoration:"none"}}>
-                <li>
-                    <BungalowIcon className="icon"/>
-                    <span>Message</span>
-                </li>  
-                </Link>
                 <Link to="/parent" style={{textDecoration:"none"}}>
                 <li>
                 <BungalowIcon className="icon"/>
                 <span>Parents</span>
             </li> 
             </Link>
-            <Link to="/attandance" style={{textDecoration:"none"}}>
-            <li>
-            <BungalowIcon className="icon"/>
-            <span>Attandance</span>
-        </li> 
-        </Link>
+                    </>
+                   
+                    :null}
+               
+               
+                {
+                    role=="Admin"?null:
+                    <Link to="/message" style={{textDecoration:"none"}}>
+                <li>
+                    <BungalowIcon className="icon"/>
+                    <span>Message</span>
+                </li>  
+                </Link>
+                }
+                
+              
+            {
+                    role=="Teacher"?
+                    <Link to="/attandance" style={{textDecoration:"none"}}>
+                    <li>
+                    <BungalowIcon className="icon"/>
+                    <span>Attandance</span>
+                </li> 
+                </Link>
+                    :null
+            }
         <Link to="/subject" style={{textDecoration:"none"}}>
         <li>
         <BungalowIcon className="icon"/>

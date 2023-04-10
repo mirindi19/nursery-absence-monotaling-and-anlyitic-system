@@ -17,8 +17,52 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { getParentsAction } from "../../redux/actions/getParentsAction";
+import { addParentAction } from "../../redux/actions/addParentAction";
+import { Alert, Collapse, IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 const Parent = () => {
   const [open, setOpen] = React.useState(false);
+  const dispatch=useDispatch();
+  const getParents=useSelector((state)=>state.getParents)
+  const addParent=useSelector((state)=>state.addParent)
+  const [parentsList,setParentsList]=React.useState([])
+
+  const [fatherName,setFartherName]=React.useState("");
+  const [motherName,setMotherName]=React.useState("");
+  const [telephone,setTelephone]=React.useState("");
+
+  
+  const [fatherNameError,setFartherNameError]=React.useState("");
+  const [motherNameError,setMotherNameError]=React.useState("");
+  const [telephoneError,setTelephoneError]=React.useState("");
+  
+
+  const [openError, setOpenError] = React.useState(true);
+  const [openSuccess, setOpenSuccess] = React.useState(true);
+  const [successMessage,setSuccessMessage]=React.useState("");
+  const handleCloseMessage=()=>{
+    setOpenError(false)
+    setOpenSuccess(false)
+      }
+    
+  const handleSubmit=async (e)=>{
+    e.preventDefault()
+if(fatherName==""){
+ setFartherNameError("Father Name is required")
+}
+else if(motherName==""){
+ setMotherNameError("Mother Name is required");
+}
+else if(telephone==""){
+  setTelephoneError("Phone Number is required");
+ }
+else{
+  setFartherNameError("")
+  setMotherNameError("");
+  setTelephoneError("");
+ await dispatch(addParentAction(fatherName,motherName,telephone))
+}
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,9 +71,7 @@ const Parent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const dispatch=useDispatch();
-  const getParents=useSelector((state)=>state.getParents)
-  const [parentsList,setParentsList]=React.useState([])
+
   React.useEffect(()=>{
    async function fetchData(){
     await dispatch(getParentsAction())
@@ -46,7 +88,23 @@ const Parent = () => {
   }
     }
     fetchData()
-   },[getParents.details])
+   },[getParents.details]);
+   React.useEffect(()=>{
+    async function fetchData(){
+  if(!addParent.loading){
+    if(addParent.details.length!==0){
+      setSuccessMessage(addParent.details.message)
+      setOpenSuccess(true)
+      setFartherName("")
+      setMotherName("")
+      setTelephone("")
+      await dispatch(getParentsAction())
+    }
+  }
+    }
+    fetchData()
+   },[addParent.details])
+
 
   return (
     <div className="parent">
@@ -58,9 +116,55 @@ const Parent = () => {
     Add Parent
   </Button>
   <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Registration</DialogTitle>
+    <DialogTitle>Add New Parent</DialogTitle>
     <DialogContent>
+    {
+            !addParent.error ? null : (
+                <Collapse in={openError}>
+                    <Alert severity="error"
+                        action={
+                            <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"onClick={handleCloseMessage}>
+                        <Close
+                        fontSize="inherit"/></IconButton>
+                        }
+                        sx={
+                            {mb: 0.2}
+                    }>
+                        {/* {errorMessage==="Provided NID is not registered to the head of the household"?`${t("cbhi:providedNIDisnotregisteredtotheheadofthehousehold")}`:errorMessage} */}
+                        {addParent.error}
+                         </Alert>
+                </Collapse>
+            )
+        }
+    {
+            !successMessage ? null : (
+                <Collapse in={openSuccess}>
+                    <Alert severity="success"
+                        action={
+                            <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"onClick={handleCloseMessage}>
+                        <Close
+                        fontSize="inherit"/></IconButton>
+                        }
+                        sx={
+                            {mb: 0.2}
+                    }>
+                        {/* {errorMessage==="Provided NID is not registered to the head of the household"?`${t("cbhi:providedNIDisnotregisteredtotheheadofthehousehold")}`:errorMessage} */}
+                        {successMessage}
+                         </Alert>
+                </Collapse>
+            )
+        }
       <TextField
+        value={fatherName}
+        onChange={(e)=>setFartherName(e.target.value)}
+        helperText={fatherNameError? fatherNameError : ""}
+        error={fatherNameError}
       autoFocus
       margin="dense"
       id="fatherName"
@@ -70,6 +174,10 @@ const Parent = () => {
       variant="standard"
     />
     <TextField
+       value={motherName}
+       onChange={(e)=>setMotherName(e.target.value)}
+       helperText={motherNameError? motherNameError : ""}
+       error={motherNameError}
     autoFocus
     margin="dense"
     id="motherName"
@@ -79,6 +187,10 @@ const Parent = () => {
     variant="standard"
   />
   <TextField
+    value={telephone}
+    onChange={(e)=>setTelephone(e.target.value)}
+    helperText={telephoneError? telephoneError : ""}
+    error={telephoneError}
   autoFocus
   margin="dense"
   id="telphone"
@@ -87,19 +199,11 @@ const Parent = () => {
   fullWidth
   variant="standard"
 />
-<TextField
-autoFocus
-margin="dense"
-id="email"
-label="Email"
-type="text"
-fullWidth
-variant="standard"
-/>
+
   </DialogContent>
   <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Enter</Button>
+    <Button onClick={(e)=>handleSubmit(e)}>Submit</Button>
   </DialogActions>
 </Dialog>
     <TableContainer component={Paper} className="teacherTable">

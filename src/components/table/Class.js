@@ -58,12 +58,9 @@ else{
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-   
-    
       const [classesList,setClassesList]=React.useState([])
       React.useEffect(()=>{
        async function fetchData(){

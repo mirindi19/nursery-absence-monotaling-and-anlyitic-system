@@ -11,6 +11,9 @@ import { combineReducers } from "redux";
    import getMessageByteacherReducer from "./getMessageByteacherReducer";
    import addClassReducer from "./addClassReducer";
    import addStudentReducer from "./addStudentReducer";
+
+   import addParentReducer from "./addParentReducer";
+   import getSubjectByTeacherIdReducer from "./getSubjectByTeacherIdReducer";
  
 
 const allReducers = combineReducers({
@@ -27,6 +30,8 @@ const allReducers = combineReducers({
      addClass:addClassReducer,
    
      addStudent:addStudentReducer,
+     addParent:addParentReducer,
+     getSubjectByTeacherId: getSubjectByTeacherIdReducer,
 });
 
 export default allReducers;

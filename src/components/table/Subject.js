@@ -15,30 +15,62 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { getSubjectByTeacherIdAction } from "../../redux/actions/getSubjectByTeacherIdAction";
+import { useDispatch, useSelector } from "react-redux";
 const Subject = () => {
   const [open, setOpen] = React.useState(false);
+  const dispatch=useDispatch();
+  const getSubjectByTeacherId=useSelector((state)=>state.getSubjectByTeacherId)
+  const [subjectDetails,setSubjectDetails]=React.useState([]);
+
+  const [subjectName,setSubjectName]=React.useState("");
+  const [fileUrl,setFileUrl]=React.useState(null);
+  const [videoUrl,setVideoUrl]=React.useState(null);
+  const [description,setDescription]=React.useState("");
+
+  const [subjectNameError,setSubjectNameError]=React.useState("");
+  const [fileUrlError,setFileUrlError]=React.useState("");
+  const [videoUrlError,setVideoUrlError]=React.useState("");
+  const [descriptionError,setDescriptionError]=React.useState("");
+
+
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-    function createData(
-        subjectName: string,
-        video: String,
-        file:String,
-        teacherId:String,
-      ) {
-        return {subjectName,video,file,teacherId};
-      }
-      
-      const rows = [
-        createData('English','video','file1','009'),
-        createData('English','video','file1','009'),
-        createData('English','video','file1','009'),
-      ];
+const handleSubmit=()=>{
+  if(subjectName==="")
+  {
+    setSubjectNameError("Subject name is required")
+  }
+  else if(description===""){
+    setDescriptionError("Description is required")
+  }
+  else{
+    setSubjectNameError("")
+    setDescriptionError("")
+    console.log("name: ",subjectName+" "+"Description: ",description,+" "+"Vi url",videoUrl,fileUrl)
+  }
+}
+  React.useEffect(()=>{
+    async function fetchData(){
+     await dispatch(getSubjectByTeacherIdAction())
+    }
+    fetchData()
+   },[]) 
+    React.useEffect(()=>{
+    async function fetchData(){
+  if(!getSubjectByTeacherId.loading){
+    if(getSubjectByTeacherId.details.length>0){
+      setSubjectDetails(getSubjectByTeacherId.details)
+    }
+  }
+    }
+    fetchData()
+   },[getSubjectByTeacherId.details])
   return (
     <div className="subject">
     <Sidebar/>
@@ -49,9 +81,13 @@ const Subject = () => {
     Add Subject
   </Button>
   <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Registration</DialogTitle>
+    <DialogTitle>New Subject</DialogTitle>
     <DialogContent>
       <TextField
+        value={subjectName}
+        onChange={(e)=>setSubjectName(e.target.value)}
+        helperText={subjectNameError? subjectNameError : ""}
+        error={subjectNameError}
       autoFocus
       margin="dense"
       id="subjectName"
@@ -61,6 +97,9 @@ const Subject = () => {
       variant="standard"
     />
     <TextField
+       value={videoUrl}
+       onChange={(e)=>setVideoUrl(e.target.files && e.target.files[0])}
+     
     autoFocus
     margin="dense"
     id="video"
@@ -69,6 +108,9 @@ const Subject = () => {
     variant="standard"
   />
   <TextField
+  value={fileUrl}
+  onChange={(e)=>setFileUrl(e.target.files[0])}
+
   autoFocus
   margin="dense"
   id="files"
@@ -77,19 +119,14 @@ const Subject = () => {
   variant="standard"
 />
 <TextField
+  value={description}
+  onChange={(e)=>setDescription(e.target.value)}
+  helperText={descriptionError? descriptionError : ""}
+  error={descriptionError}
 autoFocus
 margin="dense"
-id="teacherId"
-label="Teacher Id"
-type="text"
-fullWidth
-variant="standard"
-/>
-<TextField
-autoFocus
-margin="dense"
-id="classId"
-label="classId"
+id="description"
+label="Description"
 type="text"
 fullWidth
 variant="standard"
@@ -97,7 +134,7 @@ variant="standard"
   </DialogContent>
   <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Enter</Button>
+    <Button onClick={handleSubmit}>Submit</Button>
   </DialogActions>
 </Dialog>
     <TableContainer component={Paper} className="teacherTable">
@@ -105,23 +142,23 @@ variant="standard"
       <TableHead>
         <TableRow>
           <TableCell>Subject Name</TableCell>
-          <TableCell align="right">Video</TableCell>
-          <TableCell align="right">File</TableCell>
-          <TableCell align="right">Teacher Id</TableCell>
+          <TableCell align="center">Description</TableCell>
+          <TableCell align="center">Video</TableCell>
+          <TableCell align="center">File</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        {subjectDetails.map((row) => (
           <TableRow
-            key={row.name}
+            key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
               {row.subjectName}
             </TableCell>
-            <TableCell align="right">{row.video}</TableCell>
-            <TableCell align="right">{row.file}</TableCell>
-            <TableCell align="right">{row.teacherId}</TableCell>
+            <TableCell align="center">{row.description}</TableCell>
+            <TableCell align="center">{row.videoUrl}</TableCell>
+            <TableCell align="center">{row.fileUrl}</TableCell>
           </TableRow>
         ))}
       </TableBody>
