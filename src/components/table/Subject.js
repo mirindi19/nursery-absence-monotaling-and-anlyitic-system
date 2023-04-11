@@ -1,13 +1,6 @@
 import "./subject.scss"
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -15,6 +8,13 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import IMAGES from "../../Assets/images";
+import VIDEOS from "../../Assets/video";
 const Subject = () => {
   const [open, setOpen] = React.useState(false);
 
@@ -25,20 +25,6 @@ const Subject = () => {
   const handleClose = () => {
     setOpen(false);
   };
-    function createData(
-        subjectName: string,
-        video: String,
-        file:String,
-        teacherId:String,
-      ) {
-        return {subjectName,video,file,teacherId};
-      }
-      
-      const rows = [
-        createData('English','video','file1','009'),
-        createData('English','video','file1','009'),
-        createData('English','video','file1','009'),
-      ];
   return (
     <div className="subject">
     <Sidebar/>
@@ -100,33 +86,32 @@ variant="standard"
     <Button onClick={handleClose}>Enter</Button>
   </DialogActions>
 </Dialog>
-    <TableContainer component={Paper} className="teacherTable">
-    <Table sx={{ minWidth: 200 }} aria-label="simple table">
-      <TableHead>
-        <TableRow>
-          <TableCell>Subject Name</TableCell>
-          <TableCell align="right">Video</TableCell>
-          <TableCell align="right">File</TableCell>
-          <TableCell align="right">Teacher Id</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow
-            key={row.name}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <TableCell component="th" scope="row">
-              {row.subjectName}
-            </TableCell>
-            <TableCell align="right">{row.video}</TableCell>
-            <TableCell align="right">{row.file}</TableCell>
-            <TableCell align="right">{row.teacherId}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-    </TableContainer>
+<div className="cards">
+<div class="card">
+<video controls autoPlay src={VIDEOS.kids} style={{width:'100%'}}></video>
+  <div class="container">
+    <h4><b>Sing</b></h4> 
+    <p>document</p> 
+    <p>teacherId</p>
+  </div>
+</div>
+<div class="card">
+<video controls src={VIDEOS.kids} style={{width:'100%'}}></video>
+  <div class="container">
+  <h4><b>Sing</b></h4> 
+  <p>document</p> 
+  <p>teacherId</p>
+  </div>
+</div>
+<div class="card">
+<video controls src={VIDEOS.kids} style={{width:'100%'}}></video>
+  <div class="container">
+  <h4><b>Sing</b></h4> 
+  <p>document</p> 
+  <p>teacherId</p>
+  </div>
+</div>
+</div>
     </div>
     </div>
     </div>
