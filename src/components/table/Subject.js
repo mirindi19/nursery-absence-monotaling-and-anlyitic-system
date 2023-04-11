@@ -111,6 +111,14 @@ variant="standard"
   <p>teacherId</p>
   </div>
 </div>
+<div class="card">
+<video controls src={VIDEOS.kids} style={{width:'100%'}}></video>
+  <div class="container">
+  <h4><b>Sing</b></h4> 
+  <p>document</p>
+  <p>teacherId</p>
+  </div>
+</div>
 </div>
     </div>
     </div>
