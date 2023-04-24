@@ -12,6 +12,7 @@ import Attandance from "./components/table/Attandance";
 import Subject from "./components/table/Subject";
 import Topnav from "./components/topnav/Topnav";
 import Registration from "./pages/registration/Registration";
+import VideosList from "./components/table/VideosList";
 import {BrowserRouter,Navigate,Route,Routes} from "react-router-dom";
 import ThemeProvider from './theme';
 import { HelmetProvider } from 'react-helmet-async';
@@ -38,6 +39,7 @@ function App() {
         <Route path='/attandance' element={<Attandance/>}/>
         <Route path='/subject' element={<Subject/>}/>
         <Route path='/topnav' element={<Topnav/>}/>
+        <Route path='/videos-files' element={<VideosList/>}/>
         <Route path='/registration' element={<Registration/>}/>
       </Routes>
      </ThemeProvider>

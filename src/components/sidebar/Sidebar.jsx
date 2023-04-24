@@ -93,6 +93,12 @@ const role=data.role;
         <span>Subject</span>
     </li> 
     </Link>
+    <Link to="/videos-files" style={{textDecoration:"none"}}>
+        <li>
+        <BungalowIcon className="icon"/>
+        <span>Videos & Files</span>
+    </li> 
+    </Link>
             </ul>
         </div>
     </div>

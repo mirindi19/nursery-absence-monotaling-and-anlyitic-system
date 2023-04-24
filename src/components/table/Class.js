@@ -31,10 +31,10 @@ const Class = () => {
   const [teacherIdError,setTeacherIdError]=React.useState("")
   const [classNameError,setClassNameError]=React.useState("")
 
-  const [openError, setOpenError] = React.useState(true);
+
   const [openSuccess, setOpenSuccess] = React.useState(true);
   const [successMessage,setSuccessMessage]=React.useState("");
-
+  const [openError, setOpenError] = React.useState(true);
   const handleCloseMessage=()=>{
     setOpenError(false)
     setOpenSuccess(false)

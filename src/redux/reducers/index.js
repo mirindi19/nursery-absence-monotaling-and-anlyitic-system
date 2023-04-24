@@ -14,6 +14,10 @@ import { combineReducers } from "redux";
 
    import addParentReducer from "./addParentReducer";
    import getSubjectByTeacherIdReducer from "./getSubjectByTeacherIdReducer";
+   import addSubjectReducer from "./addSubjectReducer";
+
+   import uploadFileReducer from "./uploadFileReducer";
+   import uploadVideoReducer from "./uploadVideoReducer";
  
 
 const allReducers = combineReducers({
@@ -32,6 +36,11 @@ const allReducers = combineReducers({
      addStudent:addStudentReducer,
      addParent:addParentReducer,
      getSubjectByTeacherId: getSubjectByTeacherIdReducer,
+
+     addSubject:addSubjectReducer,
+     uploadFile:uploadFileReducer,
+
+     uploadVideo:uploadVideoReducer,
 });
 
 export default allReducers;
