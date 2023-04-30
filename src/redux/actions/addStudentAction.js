@@ -5,7 +5,7 @@ import {
     ADD_STUDENT_FAILURE,
   } from "../types/addStudentType";
 
-export const addStudentAction = (firstName,lastName,dob,parentId,classId) => async (dispatch) => {
+export const addStudentAction = (firstName,lastName,dob,parentId,classId,gender) => async (dispatch) => {
 
   try {
     dispatch(addStudentRequest());
@@ -14,7 +14,8 @@ export const addStudentAction = (firstName,lastName,dob,parentId,classId) => asy
         lastName,
         dob,
         parentId,
-        classId
+        classId,
+        gender
     });
     const { data } = await res;
     if(data.statusCode===200){

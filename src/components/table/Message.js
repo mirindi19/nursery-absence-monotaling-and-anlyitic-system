@@ -16,11 +16,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
-import { getMessageByteacherAction } from "../../redux/actions/getMessageByteacherAction";
+
+import moment from "moment";
+import { getMessageSentByTeacherToParentAction } from "../../redux/actions/getMessageByTeacherToParentAction";
 const Message = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch=useDispatch();
-  const getMessageByteacher=useSelector((state)=>state.getMessageByteacher)
+  const getMessageByTeacherToParent=useSelector((state)=>state.getMessageByTeacherToParent)
 
   const [messageDetails,setMessageDetails]=React.useState([])
   const handleClickOpen = () => {
@@ -33,20 +35,20 @@ const Message = () => {
 
   React.useEffect(()=>{
     async function fetchData(){
-     await dispatch(getMessageByteacherAction())
+     await dispatch(getMessageSentByTeacherToParentAction())
     }
     fetchData()
    },[])
   React.useEffect(()=>{
     async function fetchData(){
-  if(!getMessageByteacher.loading){
-    if(getMessageByteacher.details.length>0){
-      setMessageDetails(getMessageByteacher.details)
+  if(!getMessageByTeacherToParent.loading){
+    if(getMessageByTeacherToParent.details.length>0){
+      setMessageDetails(getMessageByTeacherToParent.details)
     }
   }
     }
     fetchData()
-   },[getMessageByteacher.details])
+   },[getMessageByTeacherToParent.details])
   return (
     <div className="message">
     <Sidebar/>
@@ -55,20 +57,22 @@ const Message = () => {
     <div className="messageTable">
 
     <Button variant="outlined" onClick={handleClickOpen}>
-    add Message
+    New Message
   </Button>
-  <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Registration</DialogTitle>
+  <Dialog open={open} onClose={handleClose}
+  size="large"
+  >
+    <DialogTitle>New Message</DialogTitle>
     <DialogContent>
-      <TextField
-      autoFocus
-      margin="dense"
-      id="teacherId"
-      label="Teacher Id"
-      type="text"
-      fullWidth
-      variant="standard"
-    />
+    <TextField
+  autoFocus
+  margin="dense"
+  id="parentId"
+  label="Parent Telephone"
+  type="text"
+  fullWidth
+  variant="standard"
+/>
     <TextField
     autoFocus
     margin="dense"
@@ -77,30 +81,19 @@ const Message = () => {
     type="text"
     fullWidth
     variant="standard"
+    multiline
   />
-  <TextField
-  autoFocus
-  margin="dense"
-  id="parentId"
-  label="Parent Id"
-  type="text"
-  fullWidth
-  variant="standard"
-/>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Enter</Button>
-  </DialogActions>
-</Dialog>
 
-    <TableContainer component={Paper} className="teacherTable">
+  </DialogContent>
+
+  
+  <TableContainer component={Paper} className="teacherTable">
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>Message</TableCell>
-          <TableCell align="center">Teacher Id</TableCell>
-          <TableCell align="center">Parent Id</TableCell>
+          <TableCell>Sent Message</TableCell>
+          <TableCell align="center">Parent Telephone</TableCell>
+          <TableCell align="center">Date</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -109,11 +102,56 @@ const Message = () => {
             key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
-            <TableCell component="th" scope="row">
+             {
+              row.isTeacher==true?
+              <>
+               <TableCell component="th" scope="row">
               {row.message}
             </TableCell>
-            <TableCell align="center">{row.teacherId}</TableCell>
             <TableCell align="center">{row.parentId}</TableCell>
+            <TableCell align="center">{moment(row.createdAt).format('lll')}</TableCell>
+              </>
+              :null
+            }
+           
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+    </TableContainer>
+  <DialogActions>
+    <Button onClick={handleClose}>Cancel</Button>
+    <Button onClick={handleClose}>Send</Button>
+  </DialogActions>
+</Dialog>
+
+    <TableContainer component={Paper} className="teacherTable">
+    <Table sx={{ minWidth: 200 }} aria-label="simple table">
+      <TableHead>
+        <TableRow>
+          <TableCell>Message</TableCell>
+          <TableCell align="center">Parent Telephone</TableCell>
+          <TableCell align="center">Date</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {messageDetails.map((row) => (
+          <TableRow
+            key={row._id}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            {
+              row.isTeacher==false?
+              <>
+               <TableCell component="th" scope="row">
+              {row.message}
+            </TableCell>
+            <TableCell align="center">{row.parentId}</TableCell>
+            <TableCell align="center">{moment(row.createdAt).format('lll')}</TableCell>
+              </>
+              :null
+            }
+           
           </TableRow>
         ))}
       </TableBody>

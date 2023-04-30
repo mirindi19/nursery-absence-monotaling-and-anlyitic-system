@@ -1,14 +1,14 @@
 import axios from "axios";
 import {
-    UPLOAD_FILE_REQUEST,
-    UPLOAD_FILE_SUCCESS,
-    UPLOAD_FILE_FAILURE,
-  } from "../types/uploadFileType";
+    UPLOAD_VIDEO_REQUEST,
+    UPLOAD_VIDEO_SUCCESS,
+    UPLOAD_VIDEO_FAILURE,
+  } from "../types/uploadVideoType";
 
-export const uploadFileAction = (formData,fileId) => async (dispatch) => {
-    console.log("data..",formData,fileId)
+export const uploadVideoAction = (formData,videoId) => async (dispatch) => {
+    console.log("data..",formData,videoId)
   try {
-    dispatch(uploadFileRequest());
+    dispatch(uploadVideoRequest());
     const token = await localStorage.getItem("x-access-token");
     let headers;
     if (token) {
@@ -22,44 +22,44 @@ export const uploadFileAction = (formData,fileId) => async (dispatch) => {
       };
     }
 
-    const res = await axios.put(`http://localhost:8000/api/subjects/update-file/${fileId}`,
+    const res = await axios.put(`http://localhost:8000/api/subjects/update-video/${videoId}`,
         formData
     ,
         {headers: headers}
         );
     const { data } = await res;
     if(data.statusCode===200){
-        dispatch(uploadFileSuccess(data));
+        dispatch(uploadVideoSuccess(data));
       
     }else{
-        dispatch(uploadFileFailure(data.message));  
+        dispatch(uploadVideoFailure(data.message));  
     } 
   } catch (err) {
    
     if (err.response) {
       const errorMessage = err.response.data.message
-      dispatch(uploadFileFailure(errorMessage));
+      dispatch(uploadVideoFailure(errorMessage));
     } else {
-      dispatch(uploadFileFailure("Network Error"));
+      dispatch(uploadVideoFailure("Network Error"));
     }
   }
 };
 
-export const uploadFileRequest = () => {
+export const uploadVideoRequest = () => {
   return {
-    type:  UPLOAD_FILE_REQUEST,
+    type:  UPLOAD_VIDEO_REQUEST,
   };
 };
 
-export const uploadFileSuccess = (data) => {
+export const uploadVideoSuccess = (data) => {
   return {
-    type:  UPLOAD_FILE_SUCCESS,
+    type:  UPLOAD_VIDEO_SUCCESS,
     payload: data,
   };
 };
-export const uploadFileFailure = (error) => {
+export const uploadVideoFailure = (error) => {
   return {
-    type: UPLOAD_FILE_FAILURE,
+    type: UPLOAD_VIDEO_FAILURE,
     payload: error,
   };
 };

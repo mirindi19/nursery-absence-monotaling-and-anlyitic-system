@@ -28,6 +28,7 @@ import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import  axios from "axios";
 import DownloadLink from "react-download-link";
+import fileDownload from "js-file-download";
 const Subject = () => {
     const url_imgs = "http://localhost:8000/uploads"
   const [open, setOpen] = React.useState(false);
@@ -156,7 +157,6 @@ const getDataFromUrl=(url)=>new Promise((resolve,reject)=>{
 },2000)
 
    const handleDownloadFile=async(id)=>{
-
 let config = {
   method: 'get',
   maxBodyLength: Infinity,
@@ -166,18 +166,20 @@ let config = {
   },
   responseType:"blob"
 };
-axios.request(config)
+await axios.request(config)
 .then((response) => {
-  const url=window.URL.createObjectURL(new Blob([response.data]));
-  const link=document.createElement("a");
-  link.href=url;
-  link.setAttribute(
-    "download",
+
+  fileDownload(response.data, 'filename.pdf');
+//   const url=window.URL.createObjectURL(new Blob([response.data]));
+//   const link=document.createElement("a");
+//   link.href=url;
+//   link.setAttribute(
+//     "download",
     
-  );
-  document.body.appendChild(link);
-  link.click();
-link.parentNode.removeChild(link)
+//   );
+//   document.body.appendChild(link);
+//   link.click();
+// link.parentNode.removeChild(link)
   // console.log(JSON.stringify(response.data));
 })
 .catch((error) => {
@@ -211,12 +213,14 @@ link.parentNode.removeChild(link)
   <div class="container">
     <h4><b>{row.subjectName}</b></h4> 
     <p>{row.description}</p> 
-    <DownloadLink 
+    <p>
+    {row.fileUrl}
+    {/* <DownloadLink 
     label={row.fileUrl}
-    filename={`http://localhost:8000/uploads/${row.fileUrl}`}
-    exportFile={()=>handleClickOpenFileUpload(row.fileUrl)}
-    />
-      <p>
+    filename={`${row.fileUrl}`}
+   // exportFile={()=>handleClickOpenFileUpload(row.fileUrl)}
+    /> */}
+    
     <Button onClick={()=>{
       handleDownloadFile(row.fileUrl)
     }}>
@@ -229,7 +233,7 @@ link.parentNode.removeChild(link)
               alt="grid_image"
             />
           </div> */}
-    <CardMedia
+    {/* <CardMedia
         key={row._id}
         component="img"
         height="194"
@@ -237,7 +241,7 @@ link.parentNode.removeChild(link)
        image={`http://localhost:8000/uploads/${row.fileUrl}`}
       //  image={`/uploads/${row.fileUrl}`}
         alt="Paella dish"
-      />
+      /> */}
   
   </div>
  </div>

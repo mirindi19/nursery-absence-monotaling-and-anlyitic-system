@@ -27,12 +27,14 @@ import { Close, VideoFile } from "@mui/icons-material";
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { uploadFileAction } from "../../redux/actions/uploadFileAction";
+import { uploadVideoAction } from "../../redux/actions/uploadVideoAction";
 const Subject = () => {
   const [open, setOpen] = React.useState(false);
   const [openFileUpload, setOpenFileUpload] = React.useState(false);
   const [openVideoUpload, setOpenVideoUpload] = React.useState(false);
   const dispatch=useDispatch();
   const getSubjectByTeacherId=useSelector((state)=>state.getSubjectByTeacherId)
+  const uploadVideo=useSelector((state)=>state.uploadVideo);
   const uploadFile=useSelector((state)=>state.uploadFile)
   const addSubject=useSelector((state)=>state.addSubject)
   const [subjectDetails,setSubjectDetails]=React.useState([]);
@@ -47,11 +49,16 @@ const Subject = () => {
   const [videoUrlError,setVideoUrlError]=React.useState("");
   const [descriptionError,setDescriptionError]=React.useState("");
 
+  const [videoId,setVideoId]=React.useState("");
+
   const [openSuccess, setOpenSuccess] = React.useState(true);
 
   const [successMessage,setSuccessMessage]=React.useState("");
   const [successFileMessage,setSuccessFileMessage]=React.useState("");
   const [openSuccessFile, setOpenSuccessFile] = React.useState(true);
+
+  const [successVideoMessage,setSuccessVideoMessage]=React.useState("");
+  const [openSuccessVideo, setOpenSuccessVideo] = React.useState(true);
 
   //upload file
   const [filesToUpload, setFilesToUpload] = useState([])
@@ -66,7 +73,6 @@ const [fileId,setFileId]=useState("");
     e.preventDefault();
     const formData = new FormData();
     formData.append("video", e.target.files[0]);
-    console.log("video file",e.target.files[0])
     setVideoUrl(e.target.files[0])
   };
   // formData.append("file", files[0]);
@@ -81,13 +87,27 @@ const [fileId,setFileId]=useState("");
   };
 
 
-  const uploadVideo = async(id) => {
+  const handleUploadVideo = async(id) => {
     let formData = new FormData()
     formData.append("video", videoUrl);
   
-//await dispatch(uploadFileAction(formData,fileId))
+await dispatch(uploadVideoAction(formData,videoId))
    
   }
+
+  React.useEffect(()=>{
+    async function fetchData(){
+  if(!uploadVideo.loading){
+    if(uploadVideo.details.length!==0){
+      setSuccessVideoMessage(uploadVideo.details.message)
+      setOpenSuccessVideo(true)
+      setVideoId("")
+    }
+  }
+    }
+    fetchData()
+   },[uploadVideo.details])
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -107,7 +127,6 @@ const [fileId,setFileId]=useState("");
   const handleUploadFile=async()=>{
     let formData = new FormData()
     formData.append("file", fileUrl[0]);
-    console.log("form data2:",fileUrl[0])
 await dispatch(uploadFileAction(formData,fileId))
   }
   React.useEffect(()=>{
@@ -310,16 +329,6 @@ variant="standard"
             )
         }
     
-     {/* <label className="button" htmlFor="file_picker">Upload video
-      <AiFillPlusCircle />
-      <input
-        hidden
-        type="file"
-        name="file_picker"
-        id="file_picker"
-        onChange={(e) => handleChange(e)}
-      />
-    </label> */}
        <FileUpload
         multiFile={false}
         onFilesChange={handleFilesChange}
@@ -381,8 +390,8 @@ variant="standard"
             )
         }
     {
-            !successFileMessage ? null : (
-                <Collapse in={openSuccessFile}>
+            !successVideoMessage ? null : (
+                <Collapse in={openSuccessVideo}>
                     <Alert severity="success"
                         action={
                             <IconButton
@@ -396,7 +405,7 @@ variant="standard"
                             {mb: 0.2}
                     }>
                         {/* {errorMessage==="Provided NID is not registered to the head of the household"?`${t("cbhi:providedNIDisnotregisteredtotheheadofthehousehold")}`:errorMessage} */}
-                        {successFileMessage}
+                        {successVideoMessage}
                          </Alert>
                 </Collapse>
             )
@@ -418,8 +427,8 @@ variant="standard"
   <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
     {
-      uploadFile.loading?"Loading":
-      <Button onClick={handleUploadFile}>Upload Video</Button>
+      uploadVideo.loading?"Loading":
+      <Button onClick={handleUploadVideo}>Upload Video</Button>
     }
   </DialogActions>
 </Dialog>
@@ -457,7 +466,7 @@ variant="standard"
              
              onClick={
               ()=>{
-                setFileId(row._id)
+                setVideoId(row._id)
                 handleClickOpenVideoUpload()
               }
               }

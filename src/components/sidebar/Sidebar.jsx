@@ -79,26 +79,33 @@ const role=data.role;
               
             {
                     role=="Teacher"?
+                   <>
                     <Link to="/attandance" style={{textDecoration:"none"}}>
                     <li>
                     <BungalowIcon className="icon"/>
                     <span>Attandance</span>
                 </li> 
                 </Link>
+                 <Link to="/subject" style={{textDecoration:"none"}}>
+                 <li>
+                 <BungalowIcon className="icon"/>
+                 <span>Subject</span>
+             </li> 
+             </Link>
+                   </>
                     :null
             }
-        <Link to="/subject" style={{textDecoration:"none"}}>
-        <li>
-        <BungalowIcon className="icon"/>
-        <span>Subject</span>
-    </li> 
-    </Link>
-    <Link to="/videos-files" style={{textDecoration:"none"}}>
-        <li>
-        <BungalowIcon className="icon"/>
-        <span>Videos & Files</span>
-    </li> 
-    </Link>
+       {   role=="Teacher" || role=="Parent"?
+         <Link to="/videos-files" style={{textDecoration:"none"}}>
+         <li>
+         <BungalowIcon className="icon"/>
+         <span>Videos & Files</span>
+         </li> 
+        </Link>
+       :null
+       
+    }
+  
             </ul>
         </div>
     </div>

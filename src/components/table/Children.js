@@ -21,6 +21,13 @@ import { getClassesAction } from "../../redux/actions/getClassesAction";
 import { Alert, Collapse, IconButton, MenuItem } from "@mui/material";
 import { addStudentAction } from "../../redux/actions/addStudentAction";
 import { Close } from "@mui/icons-material";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
+import moment from "moment";
 const Children = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch=useDispatch();
@@ -45,6 +52,7 @@ const Children = () => {
   const [openError, setOpenError] = React.useState(true);
   const [openSuccess, setOpenSuccess] = React.useState(true);
   const [successMessage,setSuccessMessage]=React.useState("");
+  const [gender,setGender]=React.useState('Male')
 
 
   const handleCloseMessage=()=>{
@@ -75,7 +83,7 @@ else{
   setDobError("");
   setParentIdError("");
   setClassIdError("");
- await dispatch(addStudentAction(firstName,lastName,dob,parentId,classId))
+ await dispatch(addStudentAction(firstName,lastName,dob,parentId,classId,gender))
 }
  }
 
@@ -236,6 +244,20 @@ else{
   fullWidth
   variant="standard"
 />
+
+<FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        value={gender}
+        onChange={(e)=>setGender(e.target.value)}
+      >
+        <FormControlLabel value="Female"  control={<Radio />} label="Female" />
+        <FormControlLabel value="Male" control={<Radio />} label="Male" />
+      </RadioGroup>
+    </FormControl>
 <TextField
 value={parentId}
 onChange={(e)=>setParentId(e.target.value)}
@@ -284,6 +306,7 @@ variant="standard"
           <TableCell>First Name</TableCell>
           <TableCell align="center">Last Name</TableCell>
           <TableCell align="center">Reg Number</TableCell>
+          <TableCell align="center">Gender</TableCell>
           <TableCell align="center">Date of Birth</TableCell>
           <TableCell align="center">Parent Phone Number</TableCell>
         </TableRow>
@@ -299,7 +322,8 @@ variant="standard"
             </TableCell>
             <TableCell align="center">{row.lastName}</TableCell>
             <TableCell align="center">{row.regNumber}</TableCell>
-            <TableCell align="center">{row.dob}</TableCell>
+            <TableCell align="center">{row.gender}</TableCell>
+            <TableCell align="center">{moment(row.dob).format('lll')}</TableCell>
             <TableCell align="center">{row.parentId}</TableCell>
           </TableRow>
         ))}

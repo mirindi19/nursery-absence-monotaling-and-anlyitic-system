@@ -8,7 +8,7 @@ import { combineReducers } from "redux";
 
    import addTeacherReducer from "./addTeacherReducer";
    import signupReducer from "./signupReducer";
-   import getMessageByteacherReducer from "./getMessageByteacherReducer";
+   import getMessageByTeacherToParentReducer from "./getMessageByTeacherToParentReducer";
    import addClassReducer from "./addClassReducer";
    import addStudentReducer from "./addStudentReducer";
 
@@ -18,7 +18,9 @@ import { combineReducers } from "redux";
 
    import uploadFileReducer from "./uploadFileReducer";
    import uploadVideoReducer from "./uploadVideoReducer";
- 
+
+   import getStudentsByClassIdReducer from "./getStudentsByClassIdReducer";
+   import getMessageSentByTeacherReducer from "./getMessagesSentByTeacherReducer";
 
 const allReducers = combineReducers({
      login:loginReducer,
@@ -30,7 +32,7 @@ const allReducers = combineReducers({
 
      addTeacher:addTeacherReducer,
      signup:signupReducer,
-     getMessageByteacher:getMessageByteacherReducer,
+     getMessageByTeacherToParent:getMessageByTeacherToParentReducer ,
      addClass:addClassReducer,
    
      addStudent:addStudentReducer,
@@ -41,6 +43,8 @@ const allReducers = combineReducers({
      uploadFile:uploadFileReducer,
 
      uploadVideo:uploadVideoReducer,
+     getStudentsByClassId:getStudentsByClassIdReducer,
+     getMessageSentByTeacher: getMessageSentByTeacherReducer,
 });
 
 export default allReducers;

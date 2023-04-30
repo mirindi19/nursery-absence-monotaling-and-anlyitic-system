@@ -20,6 +20,7 @@ import { getParentsAction } from "../../redux/actions/getParentsAction";
 import { addParentAction } from "../../redux/actions/addParentAction";
 import { Alert, Collapse, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import moment from "moment";
 const Parent = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch=useDispatch();
@@ -227,7 +228,7 @@ else{
             </TableCell>
             <TableCell align="center">{row.motherName}</TableCell>
             <TableCell align="center">{row.telephone}</TableCell>
-            <TableCell align="center">{row.createdAt}</TableCell>
+            <TableCell align="center">{moment(row.createdAt).format('lll')}</TableCell>
           </TableRow>
         ))}
       </TableBody>

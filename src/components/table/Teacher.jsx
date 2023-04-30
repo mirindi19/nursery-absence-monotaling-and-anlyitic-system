@@ -20,6 +20,7 @@ import { getTeachersAction } from "../../redux/actions/teacherListAction";
 import { addTeacherAction } from "../../redux/actions/addTeacherAction";
 import { Alert, Collapse, IconButton } from "@mui/material";
 import CloseIcon  from "@mui/icons-material/Close";
+import moment from "moment";
 
 const Teacher = () => {
   const [open, setOpen] = React.useState(false);
@@ -212,7 +213,7 @@ else{
           {row.fullName}
         </TableCell>
         <TableCell align="center">{row.telephone}</TableCell>
-        <TableCell align="center">{row.createdAt}</TableCell>
+        <TableCell align="center">{moment(row.createdAt).format('lll')}</TableCell>
       </TableRow>
     ))}
   </TableBody>

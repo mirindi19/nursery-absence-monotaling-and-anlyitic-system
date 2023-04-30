@@ -51,9 +51,7 @@ const Users = () => {
          <TableRow>
            <TableCell>Email</TableCell>
            <TableCell align="center">Role</TableCell>
-           <TableCell align="center">isActive</TableCell>
-           <TableCell align="center">Teacher</TableCell>
-           <TableCell align="center">Parent</TableCell>
+          
          </TableRow>
        </TableHead>
        <TableBody>
@@ -66,9 +64,6 @@ const Users = () => {
                {row.email}
              </TableCell>
              <TableCell align="center">{row.role}</TableCell>
-             <TableCell align="center">{row.isActive}</TableCell>
-             <TableCell align="center">{row.teacherId}</TableCell>
-             <TableCell align="center">{row.parentId}</TableCell>
            </TableRow>
          ))}
        </TableBody>

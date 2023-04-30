@@ -3,10 +3,10 @@ import {
     GET_MESSAGEBY_TEACHER_REQUEST,
     GET_MESSAGEBY_TEACHER_SUCCESS,
     GET_MESSAGEBY_TEACHER_FAILURE,
-  } from "../types/getMessageByteacherType";
+  } from "../types/getMessageByTeacherToParentType";
   
 
-export const getMessageByteacherAction = () => async (dispatch) => {
+export const getMessageSentByTeacherToParentAction = () => async (dispatch) => {
   try {
     dispatch(getMessageByteacherRequest());
     const token = await localStorage.getItem("x-access-token");
@@ -21,7 +21,7 @@ export const getMessageByteacherAction = () => async (dispatch) => {
         "Content-Type": "application/json",
       };
     }
-    const { data }= await axios.get(`http://localhost:8000/api/messages`, {
+    const { data }= await axios.get(`http://localhost:8000/api/messages/message-sentby-teacher-parent`, {
       headers: headers,
     });
 

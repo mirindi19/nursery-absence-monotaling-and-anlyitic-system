@@ -15,9 +15,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from "react-redux";
+import { getStudentsClassIdAction } from "../../redux/actions/getStudentsByClassIdAction";
+import moment from "moment/moment";
 const Attandance = () => {
   const [open, setOpen] = React.useState(false);
-
+  const dispatch=useDispatch();
+  const getStudentsByClassId=useSelector((state)=>state.getStudentsByClassId);
+  const [studentsList,setStudentsList]=React.useState([])
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,19 +30,25 @@ const Attandance = () => {
   const handleClose = () => {
     setOpen(false);
   };
-    function createData(
-        studentID: string,
-        status: String,
-        date:String,
-      ) {
-        return {studentID,status,date};
-      }
-      
-      const rows = [
-        createData('09','false','09/07/2223'),
-        createData('09','false','09/07/2223'),
-        createData('09','false','09/07/2223'),
-      ];
+    
+  React.useEffect(()=>{
+    async function fetchData(){
+     await dispatch(getStudentsClassIdAction())
+    }
+    fetchData()
+   },[])
+ 
+   React.useEffect(()=>{
+     async function fetchData(){
+   if(!getStudentsByClassId.loading){
+     if(getStudentsByClassId.details.length>0){
+       setStudentsList(getStudentsByClassId.details)
+     }
+   }
+     }
+     fetchData()
+    },[getStudentsByClassId.details])
+ 
   return (
     <div className="attandance">
     <Sidebar/>
@@ -48,7 +59,7 @@ const Attandance = () => {
     Attandance
   </Button>
   <Dialog open={open} onClose={handleClose}>
-    <DialogTitle>Registration Attandance</DialogTitle>
+    <DialogTitle>Studets Attandance form</DialogTitle>
     <DialogContent>
       <TextField
       autoFocus
@@ -82,26 +93,30 @@ const Attandance = () => {
     <Button onClick={handleClose}>Enter</Button>
   </DialogActions>
 </Dialog>
-    <TableContainer component={Paper} className="teacherTable">
+<TableContainer component={Paper} className="teacherTable">
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>Student Id</TableCell>
-          <TableCell align="right">Status</TableCell>
-          <TableCell align="right">Date</TableCell>
+          <TableCell>First Name</TableCell>
+          <TableCell align="center">Last Name</TableCell>
+          <TableCell align="center">Reg Number</TableCell>
+          <TableCell align="center">Date of Birth</TableCell>
+          <TableCell align="center">Parent Phone Number</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        {studentsList.map((row) => (
           <TableRow
-            key={row.name}
+            key={row._id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
-              {row.studentID}
+              {row.firstName}
             </TableCell>
-            <TableCell align="right">{row.status}</TableCell>
-            <TableCell align="right">{row.date}</TableCell>
+            <TableCell align="center">{row.lastName}</TableCell>
+            <TableCell align="center">{row.regNumber}</TableCell>
+            <TableCell align="center">{moment(row.dob).format('ll')}</TableCell>
+            <TableCell align="center">{row.parentId}</TableCell>
           </TableRow>
         ))}
       </TableBody>
