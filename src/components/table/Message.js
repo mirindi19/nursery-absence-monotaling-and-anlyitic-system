@@ -23,7 +23,10 @@ const Message = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch=useDispatch();
   const getMessageByTeacherToParent=useSelector((state)=>state.getMessageByTeacherToParent)
-
+  const [message,setMessage]=React.useState("");
+  const [parentId,setParentId]=React.useState("");
+  const [messageError,setMessageError]=React.useState("");
+  const [parentIdError,setParentIdError]=React.useState("");
   const [messageDetails,setMessageDetails]=React.useState([])
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,6 +52,23 @@ const Message = () => {
     }
     fetchData()
    },[getMessageByTeacherToParent.details])
+
+
+
+     
+  const handleSubmit=async (e)=>{
+    e.preventDefault()
+    if(parentId==""){
+      setParentIdError("Telephone number is required")
+    }
+    else if(message==""){
+setMessageError("Message is required")
+    }
+    else{
+      setParentIdError("")
+      setMessageError("")
+    }
+  }
   return (
     <div className="message">
     <Sidebar/>
@@ -65,6 +85,10 @@ const Message = () => {
     <DialogTitle>New Message</DialogTitle>
     <DialogContent>
     <TextField
+    value={parentId}
+    onChange={(e)=>setParentId(e.target.value)}
+    helperText={parentIdError? parentIdError : ""}
+    error={parentIdError}
   autoFocus
   margin="dense"
   id="parentId"
@@ -74,6 +98,10 @@ const Message = () => {
   variant="standard"
 />
     <TextField
+    value={message}
+    onChange={(e)=>setMessage(e.target.value)}
+    helperText={messageError? messageError : ""}
+    error={messageError}
     autoFocus
     margin="dense"
     id="message"
@@ -86,7 +114,10 @@ const Message = () => {
 
   </DialogContent>
 
-  
+  <DialogActions>
+    <Button onClick={handleClose}>Cancel</Button>
+    <Button onClick={handleSubmit}>Send</Button>
+  </DialogActions>
   <TableContainer component={Paper} className="teacherTable">
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
@@ -119,10 +150,7 @@ const Message = () => {
       </TableBody>
     </Table>
     </TableContainer>
-  <DialogActions>
-    <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Send</Button>
-  </DialogActions>
+ 
 </Dialog>
 
     <TableContainer component={Paper} className="teacherTable">

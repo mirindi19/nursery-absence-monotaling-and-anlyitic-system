@@ -1,3 +1,4 @@
+import './topnav.scss'
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,10 +13,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import IMAGES from "../../Assets/images";
 
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Signup','Login'];
+const settings = ['Logout'];
 const Topnav = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -38,7 +39,10 @@ const Topnav = () => {
     <AppBar position="static" sx={{backgroundColor:'#00264D'}}>
     <Container maxWidth="xl">
       <Toolbar disableGutters>
-        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+       <Box 
+       sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+        <img src={IMAGES.logo} alt="" className='logo'/>
+        
         <Typography
           variant="h6"
           noWrap
@@ -49,14 +53,17 @@ const Topnav = () => {
             display: { xs: 'none', md: 'flex' },
             fontFamily: 'monospace',
             fontWeight: 700,
-            letterSpacing: '.3rem',
+            letterSpacing: '.1rem',
             color: 'inherit',
             textDecoration: 'none',
+            
           }}
         >
-          LOGO
+          <p className='apacope'>
+          APACOPE 
+          </p>
         </Typography>
-
+        </Box>
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
             size="large"
@@ -93,7 +100,10 @@ const Topnav = () => {
             ))}
           </Menu>
         </Box>
-        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+     <Box
+   sx={{ display: { xs: 'flex', md: 'none' }, mr: 1,marginLeft:15  }} 
+     >
+     <img src={IMAGES.logo} alt="" className='logo'/>
         <Typography
           variant="h5"
           noWrap
@@ -103,16 +113,19 @@ const Topnav = () => {
             mr: 2,
             display: { xs: 'flex', md: 'none' },
             flexGrow: 1,
+          
             fontFamily: 'monospace',
             fontWeight: 700,
             letterSpacing: '.3rem',
             color: 'inherit',
             textDecoration: 'none',
+            
           }}
         >
-          LOGO
+          APACOPE
         </Typography>
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        </Box>
+        <Box sx={{ flexGrow: 1,  marginLeft:60, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (
             <Button
               key={page}
@@ -125,11 +138,6 @@ const Topnav = () => {
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-            </IconButton>
-          </Tooltip>
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"

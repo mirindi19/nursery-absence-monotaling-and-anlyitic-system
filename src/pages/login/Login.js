@@ -67,7 +67,7 @@ const Login = () => {
       </Typography>
       <Typography variant="body2" sx={{ mb: 5 }}>
        Don’t have an account? {''}
-  <Link href='Registration' variant="subtitle2">Get started</Link>
+  <Link href='Registration' variant="subtitle2">Sign up</Link>
   </Typography>
 <LoginForm/>
     </StyledContent>

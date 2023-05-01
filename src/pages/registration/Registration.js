@@ -64,7 +64,12 @@ const Registration = () => {
       <Typography variant="body2" sx={{ mb: 5 }}>
       By creating account you will be able to commit more with us.
  </Typography>
+ <Typography variant="body2" sx={{ mb: 5 }}>
+       Already have an account? {''}
+  <Link href='login' variant="subtitle2">Sign In</Link>
+  </Typography>
 <RegistrationForm/>
+
     </StyledContent>
   </Container>
 </StyledRoot>

@@ -16,7 +16,7 @@ import VideosList from "./components/table/VideosList";
 import {BrowserRouter,Navigate,Route,Routes} from "react-router-dom";
 import ThemeProvider from './theme';
 import { HelmetProvider } from 'react-helmet-async';
-
+import LandingPage from "./pages/hero/LandingPage";
 function App() {
 
    const auth=localStorage.getItem("x-access-token")
@@ -26,8 +26,8 @@ function App() {
     <BrowserRouter>
      <ThemeProvider>
      <Routes>
-    
-        <Route path='/' element={<Login/>}/>:
+     <Route path='/' element={<LandingPage/>}/>
+        <Route path='/login' element={<Login/>}/>
         <Route path='/dashboard' element={<HomePage/>}/>
  
         <Route path='/user-list' element={<Users/>}/>
