@@ -17,12 +17,40 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentsClassIdAction } from "../../redux/actions/getStudentsByClassIdAction";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import moment from "moment/moment";
+import axios from "axios";
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormGroup from '@mui/material/FormGroup';
 const Attandance = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch=useDispatch();
   const getStudentsByClassId=useSelector((state)=>state.getStudentsByClassId);
   const [studentsList,setStudentsList]=React.useState([])
+  const [Cdate, setDate] = React.useState('');
+  let newdate=new Date().toLocaleDateString('fr-FR');
+
+  const handleChange=async(e,id)=>{
+   console.log("value",e.target.value,id,Cdate)
+  await axios.post('http://localhost:8000/api/attendances', {
+    studentId:id,
+    status:e.target.value,
+    date:Cdate
+  })
+  .then(function (response) {
+    console.log("Response data:",response.data);
+    
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -55,9 +83,24 @@ const Attandance = () => {
     <div className="navAttandance">
     <Navbar/>
     <div className="attandanceTable">
-    <Button variant="outlined" onClick={handleClickOpen}>
-    Attandance
-  </Button>
+  <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer
+        components={[
+          'DatePicker',
+        ]}
+      >
+        
+        <DemoItem label="Pick Date">
+          <DatePicker
+          defaultValue={dayjs(newdate)} 
+          value={Cdate}
+        onChange={(date) => {
+      const d = new Date(date);
+      setDate(d);
+    }}  />
+        </DemoItem>
+      </DemoContainer>
+    </LocalizationProvider>
   <Dialog open={open} onClose={handleClose}>
     <DialogTitle>Studets Attandance form</DialogTitle>
     <DialogContent>
@@ -117,6 +160,23 @@ const Attandance = () => {
             <TableCell align="center">{row.regNumber}</TableCell>
             <TableCell align="center">{moment(row.dob).format('ll')}</TableCell>
             <TableCell align="center">{row.parentId}</TableCell>
+            <FormGroup
+             row
+             aria-labelledby="demo-row-radio-buttons-group-label"
+             name="row-radio-buttons-group"
+            // value={checked}
+                onChange={(e)=>handleChange(e,row.regNumber)}
+            >
+            <FormControlLabel control={<Checkbox
+          
+              inputProps={{ 'aria-label': 'controlled' }}
+            sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />} value="Present"   label="Present"/>
+            <FormControlLabel control={<Checkbox
+           
+              inputProps={{ 'aria-label': 'controlled' }}
+            sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />}  value="Absent"   label="Absent" />
+            </FormGroup>
+           
           </TableRow>
         ))}
       </TableBody>
