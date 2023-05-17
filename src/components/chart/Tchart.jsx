@@ -67,16 +67,28 @@ const Chart = () => {
     let finalt=0
     let parcentagePresent =0
     let parcentageAbsent =0
-       await axios.get(`http://localhost:8000/api/attendances`, ).then(function (response) {
+    const token = await localStorage.getItem("x-access-token");
+    let headers;
+    if (token) {
+      headers = {
+        "Content-Type": "application/json",
+        token: `${token}`,
+      };
+    } else {
+      headers = {
+        "Content-Type": "application/json",
+      };
+    }
+       await axios.get(`http://localhost:8000/api/students/students-classe`,{headers:headers} ).then(function (response) {
         const res = response.data.data;
         return res;
         })
         .then(function (res) {
-          labelSet.push(res.length + "  Students Attendance results ");
+          labelSet.push(res.length + "  Students ");
           for (const val of res) {
-            const statusName=val.status
+            const statusName=val.gender
            // const finalTotal =( (val.total / (resCount * 100)) * 100).toFixed(2);
-           if(statusName=='Present'){
+           if(statusName=='Female'){
             presentCount+=1
           
            }else{
@@ -91,14 +103,14 @@ const Chart = () => {
           }
          const datas = [
           {
-            name: 'Present',
+            name: 'Female',
             // uv: 590,
              pv: parcentagePresent* 100,
             amt: parcentagePresent* 100 ,
           },
             { 
               // name: "Present", value: parcentagePresent* 100 
-              name: 'Absent',
+              name: 'Male',
               // uv: 590,
               pv: parcentageAbsent* 100,
               amt: parcentageAbsent* 100,
@@ -121,7 +133,7 @@ const Chart = () => {
   }, []);
   return (
     <div className='chart'>
-    <div className="title">student attendance</div>
+    <div className="title">Gender </div>
     
     <ComposedChart width={730} height={370} data={data}>
     <XAxis dataKey="name" />

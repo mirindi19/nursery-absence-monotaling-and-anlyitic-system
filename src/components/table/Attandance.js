@@ -36,11 +36,11 @@ const Attandance = () => {
   let newdate=new Date().toLocaleDateString('fr-FR');
 
   const handleChange=async(e,id)=>{
-   console.log("value",e.target.value,id,Cdate)
+   console.log("value",e.target.value,id,Cdate.toLocaleDateString('fr-FR'))
   await axios.post('http://localhost:8000/api/attendances', {
     studentId:id,
     status:e.target.value,
-    date:Cdate
+    date:Cdate.toLocaleDateString('fr-FR')
   })
   .then(function (response) {
     console.log("Response data:",response.data);
