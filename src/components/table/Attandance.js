@@ -27,6 +27,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import FormGroup from '@mui/material/FormGroup';
+
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import logo from "../../Assets/images/logo.jpeg";
 const Attandance = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch=useDispatch();
@@ -34,9 +38,9 @@ const Attandance = () => {
   const [studentsList,setStudentsList]=React.useState([])
   const [Cdate, setDate] = React.useState('');
   let newdate=new Date().toLocaleDateString('fr-FR');
-
+  const todaydate=new Date().toISOString().slice(0,10);
   const handleChange=async(e,id)=>{
-   console.log("value",e.target.value,id,Cdate.toLocaleDateString('fr-FR'))
+
   await axios.post('http://localhost:8000/api/attendances', {
     studentId:id,
     status:e.target.value,
@@ -76,13 +80,78 @@ const Attandance = () => {
      }
      fetchData()
     },[getStudentsByClassId.details])
+
+    //report 
+    const todaysDate = () => {
+      const time = new Date(Date.now());
+      const year = time.getFullYear();
+      const month = time.getMonth();
+      const day = time.getDay();
+      const date = `${year}-${month}-${day}`;
+      return date;
+    };
+
+    const generateListOfAllStudent = () => {
+      const doc = new jsPDF();
+      doc.addImage(logo, "JPEG", 20, 5, 40, 40);
+      doc.setFont("Helvertica", "normal");
+      doc.text("Rwanda Basic Education Board", 20, 50);
+      doc.text(`Class Name: N3`, 20, 55);
+      doc.text("Email: info@gsa.rw", 20, 60);
+      doc.setFont("Helvertica", "normal");
+      doc.text(`Date ${todaydate}`, 140, 65);
+      doc.setFont("Helvertica", "bold");
+      doc.text("List of Students Report", 70, 75);
+      const tableColumn = [
+        "Last Name",
+        "First Name",
+        "Student Reg number",
+        "Gender",
+       
+      ];
+      const tableRows = [];
+  
+      studentsList.map((student) => {
+        const studentData = [
+          student.lastName,
+          student.firstName,
+          student.regNumber,
+          student.gender,
+
+        ];
+       
+          tableRows.push(studentData);
+
+      });
+  
+      doc.autoTable(tableColumn, tableRows, {
+        startY: 80,
+        theme: "striped",
+        margin: 10,
+        styles: {
+          font: "courier",
+          fontSize: 12,
+          overflow: "linebreak",
+          cellPadding: 3,
+          halign: "center",
+        },
+        head: [tableColumn],
+        body: [tableRows],
+      });
+      const date = Date().split(" ");
+      const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+  
+      doc.save(`report_${dateStr}.pdf`);
+    };
  
   return (
     <div className="attandance">
     <Sidebar/>
     <div className="navAttandance">
     <Navbar/>
+  
     <div className="attandanceTable">
+     
   <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer
         components={[
@@ -100,7 +169,9 @@ const Attandance = () => {
     }}  />
         </DemoItem>
       </DemoContainer>
+      
     </LocalizationProvider>
+    <Button variant="outlined" onClick={generateListOfAllStudent} >Generate Report</Button>
   <Dialog open={open} onClose={handleClose}>
     <DialogTitle>Studets Attandance form</DialogTitle>
     <DialogContent>

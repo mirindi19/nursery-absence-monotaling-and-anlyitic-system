@@ -26,7 +26,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import logo from "../../Assets/images/logo.jpeg";
 import moment from "moment";
 const Children = () => {
   const [open, setOpen] = React.useState(false);
@@ -53,7 +55,7 @@ const Children = () => {
   const [openSuccess, setOpenSuccess] = React.useState(true);
   const [successMessage,setSuccessMessage]=React.useState("");
   const [gender,setGender]=React.useState('Male')
-
+  const todaydate=new Date().toISOString().slice(0,10);
 
   const handleCloseMessage=()=>{
     setOpenError(false)
@@ -152,6 +154,63 @@ else{
     fetchData()
    },[addStudent.details])
 
+   
+//report
+const generateListOfAllKids = () => {
+  const doc = new jsPDF();
+  doc.addImage(logo, "JPEG", 20, 5, 40, 40);
+  doc.setFont("Helvertica", "normal");
+  doc.text("Rwanda Basic Education Board", 20, 50);
+  // doc.text(`Class Name: N3`, 20, 55);
+  doc.text("Email: info@gsa.rw", 20, 60);
+  doc.setFont("Helvertica", "normal");
+  doc.text(`Date ${todaydate}`, 140, 65);
+  doc.setFont("Helvertica", "bold");
+  doc.text("List of all Kids ", 70, 75);
+  const tableColumn = [
+    "First Name",
+    "Last Name",
+    "Reg Number",
+    "Gender"
+   
+   
+  ];
+  const tableRows = [];
+
+  studentsList.map((t) => {
+    const teacherData = [
+      t.firstName,
+      t.lastName,
+      t.regNumber,
+      t.gender
+    
+
+    ];
+   
+      tableRows.push(teacherData);
+
+  });
+
+  doc.autoTable(tableColumn, tableRows, {
+    startY: 80,
+    theme: "striped",
+    margin: 10,
+    styles: {
+      font: "courier",
+      fontSize: 12,
+      overflow: "linebreak",
+      cellPadding: 3,
+      halign: "center",
+    },
+    head: [tableColumn],
+    body: [tableRows],
+  });
+  const date = Date().split(" ");
+  const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+  doc.save(`report_${dateStr}.pdf`);
+};
+
+
   return (
     <div className='children'>
     <Sidebar/>
@@ -161,6 +220,7 @@ else{
     <Button variant="outlined" onClick={handleClickOpen}>
     Add New Student
   </Button>
+  <Button variant="outlined" onClick={generateListOfAllKids}>Generate Report</Button>
   <Dialog open={open} onClose={handleClose}>
     <DialogTitle>Add New Student</DialogTitle>
     <DialogContent>

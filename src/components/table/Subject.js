@@ -33,10 +33,11 @@ const Subject = () => {
   const [openFileUpload, setOpenFileUpload] = React.useState(false);
   const [openVideoUpload, setOpenVideoUpload] = React.useState(false);
   const dispatch=useDispatch();
-  const getSubjectByTeacherId=useSelector((state)=>state.getSubjectByTeacherId)
+ 
   const uploadVideo=useSelector((state)=>state.uploadVideo);
   const uploadFile=useSelector((state)=>state.uploadFile)
   const addSubject=useSelector((state)=>state.addSubject)
+  const getSubjectByTeacherId=useSelector((state)=>state.getSubjectByTeacherId)
   const [subjectDetails,setSubjectDetails]=React.useState([]);
 
   const [subjectName,setSubjectName]=React.useState("");

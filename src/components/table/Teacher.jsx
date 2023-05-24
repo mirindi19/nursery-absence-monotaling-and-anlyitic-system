@@ -21,6 +21,9 @@ import { addTeacherAction } from "../../redux/actions/addTeacherAction";
 import { Alert, Collapse, IconButton } from "@mui/material";
 import CloseIcon  from "@mui/icons-material/Close";
 import moment from "moment";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import logo from "../../Assets/images/logo.jpeg";
 
 const Teacher = () => {
   const [open, setOpen] = React.useState(false);
@@ -37,7 +40,8 @@ const Teacher = () => {
   const [fullNameerror,setFullNameerror]=React.useState("")
   const [openError, setOpenError] = React.useState(true);
   const [openSuccess, setOpenSuccess] = React.useState(true);
-  const [successMessage,setSuccessMessage]=React.useState("")
+  const [successMessage,setSuccessMessage]=React.useState("");
+  const todaydate=new Date().toISOString().slice(0,10);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -101,6 +105,57 @@ else{
     fetchData()
    },[addTeacher.details])
 
+//report
+const generateListOfAllTeacher = () => {
+  const doc = new jsPDF();
+  doc.addImage(logo, "JPEG", 20, 5, 40, 40);
+  doc.setFont("Helvertica", "normal");
+  doc.text("Rwanda Basic Education Board", 20, 50);
+  // doc.text(`Class Name: N3`, 20, 55);
+  doc.text("Email: info@gsa.rw", 20, 60);
+  doc.setFont("Helvertica", "normal");
+  doc.text(`Date ${todaydate}`, 140, 65);
+  doc.setFont("Helvertica", "bold");
+  doc.text("List of Teachers ", 70, 75);
+  const tableColumn = [
+    "Full Name",
+    "Telephone",
+   
+   
+  ];
+  const tableRows = [];
+
+  teachersListDetails.map((t) => {
+    const teacherData = [
+      t.fullName,
+      t.telephone,
+    
+
+    ];
+   
+      tableRows.push(teacherData);
+
+  });
+
+  doc.autoTable(tableColumn, tableRows, {
+    startY: 80,
+    theme: "striped",
+    margin: 10,
+    styles: {
+      font: "courier",
+      fontSize: 12,
+      overflow: "linebreak",
+      cellPadding: 3,
+      halign: "center",
+    },
+    head: [tableColumn],
+    body: [tableRows],
+  });
+  const date = Date().split(" ");
+  const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
+  doc.save(`report_${dateStr}.pdf`);
+};
 
   return (
     <div className='teacher'>
@@ -111,6 +166,7 @@ else{
     <Button variant="outlined" onClick={handleClickOpen}>
     Add Teacher
   </Button>
+  <Button variant="outlined" onClick={generateListOfAllTeacher}>Generate Report</Button>
   <Dialog open={open} onClose={handleClose}>
     <DialogTitle>Tearcher Registration Form</DialogTitle>
     {

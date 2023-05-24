@@ -2,6 +2,7 @@ import "./homePage.scss"
 import Sidebar from"../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 import Widget from "../../components/widget/Widget"
+import Twidget from "../../components/widget/Twidget"
 import Chart from "../../components/chart/Chart"
 import Piechart from "../../components/pieChart/Piechart"
 import TDoughnut from "../../components/chart/TDoughnut"
@@ -31,16 +32,17 @@ const role=data.role;
       
       :
       <>
+  <div className="widgets">
+  <Twidget type="user"/>
+   <Twidget type="student"/>
+ 
+   </div>
      <div className="charts">
     <Tchart/>
     <TDoughnut/>
    </div>
       </>
     }
-  
-  
-  
-  
     </div> 
     </div>
   )
