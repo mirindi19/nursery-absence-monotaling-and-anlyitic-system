@@ -30,7 +30,10 @@ const role=data.role;
    </div>
       </>
       
-      :
+      :null}
+      {
+        role=="Teacher"?
+      
       <>
   <div className="widgets">
   <Twidget type="user"/>
@@ -42,6 +45,7 @@ const role=data.role;
     <TDoughnut/>
    </div>
       </>
+      :null
     }
     </div> 
     </div>

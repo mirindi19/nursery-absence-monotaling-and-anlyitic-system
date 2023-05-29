@@ -11,13 +11,20 @@ export const loginAction = (user, navigate) => async (dispatch) => {
     const res = await axios.post(`http://localhost:8000/api/authentication/sign-in`, user);
     const { data } = await res;
   
-    if(data.statusCode===200){
-        console.log("response code:",data.statusCode)
+    if(data.statusCode===200 && (data.data.role=="Admin" || data.data.role=="Teacher")){
+        
         dispatch(loginSuccess(data.data));
         localStorage.setItem("x-access-token", data.data.token);
         localStorage.setItem("user-data", JSON.stringify(data.data));
 navigate('/dashboard',{push:true})
-    }else{
+    }
+    else if(data.statusCode===200 && data.data.role=="Parent"){
+      dispatch(loginSuccess(data.data));
+      localStorage.setItem("x-access-token", data.data.token);
+      localStorage.setItem("user-data", JSON.stringify(data.data));
+      navigate('/message',{push:true})
+    }
+    else{
         dispatch(loginFailure(data.message));  
     } 
   } catch (err) {

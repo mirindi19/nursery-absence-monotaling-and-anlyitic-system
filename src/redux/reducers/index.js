@@ -22,6 +22,8 @@ import { combineReducers } from "redux";
    import getStudentsByClassIdReducer from "./getStudentsByClassIdReducer";
    import getMessageSentByTeacherReducer from "./getMessagesSentByTeacherReducer";
    import sentMessageToParentReducer from "./sentMessageToParentReducer";
+
+   import getMessageByTeacherToParentOnParentSideReducer from "./getMessageByTeacherToParentOnParentSideReducer";
 const allReducers = combineReducers({
      login:loginReducer,
      getUsers:getUsersReducer,
@@ -47,6 +49,7 @@ const allReducers = combineReducers({
      getMessageSentByTeacher: getMessageSentByTeacherReducer,
 
      sentMessageToParent:sentMessageToParentReducer,
+     getMessageByTeacherToParentOnParentSide:getMessageByTeacherToParentOnParentSideReducer,
 });
 
 export default allReducers;

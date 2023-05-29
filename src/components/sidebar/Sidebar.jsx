@@ -22,12 +22,16 @@ const role=data.role;
             <ul>
       
                 <p className="title">MAIN MENU</p>
-                <Link to="/dashboard" style={{textDecoration:"none"}}>
-                <li>
-                      <DashboardIcon className="icon"/>
-                    <span>dashboard</span>
-                </li>
-                </Link>
+                {
+                    role=="Parent"?null:
+
+                    <Link to="/dashboard" style={{textDecoration:"none"}}>
+                    <li>
+                          <DashboardIcon className="icon"/>
+                        <span>dashboard</span>
+                    </li>
+                    </Link>
+                }
                 {
                     role=="Admin"?
                     <>
